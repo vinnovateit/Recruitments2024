@@ -1,12 +1,12 @@
 import Link from "next/link";
-import JoinOurCommunity from "./JoinOurCommunity";
+import JoinOurCommunity from "./Components/JoinOurCommunity";
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
       <div className="container flex flex-col items-center justify-center ">
-      <JoinOurCommunity/>
-        {/*<h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+      {/*<JoinOurCommunity/>*/}
+        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
           Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
         </h1>
         
@@ -33,7 +33,7 @@ export default function HomePage() {
               deploy it.
             </div>
           </Link>
-  </div>*/}
+  </div>
       </div>
     </main>
   );
