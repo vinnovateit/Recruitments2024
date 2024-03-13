@@ -11,12 +11,12 @@ import { FaLinkedin } from "react-icons/fa";
 const JoinOurCommunity: React.FC = () => {
     return (
         <section className='bg-[#1E003E] text-white'>
-            <div className='absolute top-0 right-0'>
+            {/*<div className='absolute top-0 right-0'>
                 <Image
                 src={illustration3}
                 alt="sjdd"
                 className='relative top-0 md:h-16 md:w-16 h-10 w-10'/>
-            </div>
+    </div>*/}
             <div className='flex xl:gap-[2.2rem] lg:gap-[1.9rem] md:gap-[1.4rem] gap-[1.9rem] justify-center'>
                 <Image
                     src={illustration2}
