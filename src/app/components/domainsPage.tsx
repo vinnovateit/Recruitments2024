@@ -6,8 +6,8 @@ function  DomainsPage(){
     <div className="h-screen w-full bg-[#1E003E] flex justify-start items-start flex-col">
       <div className="heading h-64 px-8 sm:scale-100 sm:px-20 py-4 flex justify-between flex-col sm:flex-row items-start w-full">
         <div className="headingsection">
-        <img src="/OUR.png" alt="asdf" className="w-36 h-18 sm:w-48"/>
-        <span className="text-[65px] sm:text-[100px] font-bold text-white">DOMAINS</span>
+        <img src="/OUR.png" alt="asdf" className="w-28 h-18 sm:w-40"/>
+        <span className="text-[56px] sm:text-[80px] font-bold text-white">DOMAINS</span>
         </div>
         <div className="thundersection ">
           <img src="/thundericon.png" alt="Thunderromaing Icons" className="scale-[0.2] sm:scale-75 -translate-y-20 translate-x-36 sm:translate-y-12 sm:translate-x-0" />
