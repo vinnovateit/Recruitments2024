@@ -10,22 +10,22 @@ import { FaLinkedin } from "react-icons/fa";
 
 const JoinOurCommunity: React.FC = () => {
     return (
-        <section className='bg-[#1E003E] text-white'>
+        <section className='bg-[#1E003E] text-white min-w-full'>
             {/*<div className='absolute top-0 right-0'>
                 <Image
                 src={illustration3}
                 alt="sjdd"
                 className='relative top-0 md:h-16 md:w-16 h-10 w-10'/>
     </div>*/}
-            <div className='flex xl:gap-[2.2rem] lg:gap-[1.9rem] md:gap-[1.4rem] gap-[1.9rem] justify-center'>
+            <div className='flex xl:gap-[0.7rem] lg:gap-[1.9rem] md:gap-[1.4rem] gap-[2.08rem] justify-center'>
                 <Image
                     src={illustration2}
                     alt="illustration"
                     style={{ objectFit: 'cover' }}
-                    className="relative top-[30%] xl:h-[22.1rem] xl:w-[18.7rem] lg:h-[18rem] lg:w-[18.5rem] md:h-[15rem] md:w-[13.9rem] h-[11rem] w-[9.9rem] "
+                    className="relative top-[30%] xl:h-[22.1rem] xl:w-[20.7rem] lg:h-[18rem] lg:w-[18.5rem] md:h-[15rem] md:w-[13.9rem] h-[11rem] w-[9.9rem] "
                 />
 
-                <div className='font-Fixture xl:text-8xl lg:text-7xl md:text-5xl text-center xl:pt-14 lg:pt-16 hidden md:flex md:flex-col md:pt-16 tracking-wider'>
+                <div className='font-Fixture xl:text-9xl lg:text-7xl md:text-5xl text-center xl:pt-14 lg:pt-16 hidden md:flex md:flex-col md:pt-16 tracking-wider'>
                     <div>
                     JOIN <span className='text-[#BC18CF]'>OUR </span>
                     </div>
