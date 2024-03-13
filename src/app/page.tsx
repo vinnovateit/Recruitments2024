@@ -1,37 +1,54 @@
-import Link from "next/link";
+import React from 'react';
+import Photo from "../assests/AboutUs.png";
+import Graphic from "../assests/8.png";
+import Wow from "../assests/Group.png";
 
-export default function HomePage() {
+type Props = {}
+
+const AboutUs = (props: Props) => {
+
+  const image1URL = Photo.src;
+  const image2URL = Graphic.src;
+  const image3URL = Wow.src;
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-          Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-        </h1>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/usage/first-steps"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">First Steps →</h3>
-            <div className="text-lg">
-              Just the basics - Everything you need to know to set up your
-              database and authentication.
-            </div>
-          </Link>
-          <Link
-            className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20"
-            href="https://create.t3.gg/en/introduction"
-            target="_blank"
-          >
-            <h3 className="text-2xl font-bold">Documentation →</h3>
-            <div className="text-lg">
-              Learn more about Create T3 App, the libraries it uses, and how to
-              deploy it.
-            </div>
-          </Link>
+    <section id='aboutus' className='bg-specpurple h-screen w-full flex flex-col justify-center items-center'>
+      <div className='relative'>
+        {/* ABOUT US TEXT */}
+        <div className='ml-9 pt-3 md:pt-10 md:pl-8 max-w-[80vw]'>
+          <div className=' text-specpurple font-bold font-outline-2 font-mono text-6xl md:text-7xl'>
+            ABOUT
+          </div>
+          <div className='text-white font-bold font-mono text-5xl pt-3 mr-2 md:text-7xl'>
+            VINNOVATEIT
+          </div>
+        </div>
+        {/* ABOUT US GRAPHIC */}
+        <div className='relative '>
+          <div className='px-14 mt-12 flex justify-center'>
+            {/* Adjust width of image1 */}
+            <img src={image1URL} alt='group-photo' className='' />
+          </div>
+          {/* Image 3 positioned relative to Image 1 */}
+          <img src={image3URL} alt='overlay-image' style={{ position: 'absolute', top: '-10%', right: '8%', width: '25%', height: 'auto' }} />
+        </div>
+        {/* ABOUT US PARAGRAPH */}
+        <div>
+          <p className='text-white text-mono ml-10 text-center mr-10 mt-14 font-bold text-sm md:text-lg md:ml-60 md:mr-60'>
+              VinnovateIT is the official innovation and incubation lab of SITE School, 
+              VIT Vellore. To put it simply....we are the answer to the question "What 
+              if Elon Musk and Albert Einstein had a brain child?" We aim to be the 
+              one stop destination for all you curious cats and satisfy your hunger 
+              in the diverse world of computer science.
+          </p>
+        </div>
+        {/* Image 2 */}
+        <div className='size-24 md:mt-5 mt-12'>
+          <img src={image2URL} alt='star-graphic' />
         </div>
       </div>
-    </main>
-  );
+    </section>
+  )
 }
+
+export default AboutUs;
