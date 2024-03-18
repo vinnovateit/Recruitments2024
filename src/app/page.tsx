@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { Landingpage } from "~/components/landingpage";
 
 export default function HomePage() {
@@ -6,5 +7,6 @@ export default function HomePage() {
     <body style={{backgroundColor:"#1E003E"}}>
       <Landingpage/>
     </body>
+
   );
 }
