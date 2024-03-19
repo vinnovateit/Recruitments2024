@@ -42,7 +42,6 @@ const JoinOurCommunity: React.FC = () => {
           className="relative top-[30%] h-[8rem] w-[6rem] sm:h-[12rem] sm:w-[10.4rem] md:h-[14.8rem] md:w-[10.9rem] lg:h-[18.4rem] lg:w-[15rem] xl:h-[20rem] xl:w-[14.9rem]"
         />
       </div>
-
       <div className="flex flex-col items-center pt-6 font-Fixture text-5xl leading-[3rem] sm:hidden">
         <div>
           <h1>
