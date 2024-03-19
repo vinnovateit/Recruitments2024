@@ -3,7 +3,12 @@ import React from "react";
 import Image from "next/image";
 import profilePic from "public/lp_img.png";
 import "../styles/landingpage/landingpage.css";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 export const Landingpage = () => {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/apply";
+
   return (
     <div className="total_component">
       <div className="topleft_svg">
@@ -99,7 +104,10 @@ export const Landingpage = () => {
           VinnovateIT, because everybody needs a family in college!
         </div>
       </div>
-      <button className="button mt-4 px-6 py-3 md:mt-2 lg:mt-12">
+      <button
+        className="button mt-4 px-6 py-3 md:mt-2 lg:mt-12"
+        onClick={() => signIn("google", { callbackUrl })}
+      >
         REGISTER NOW
       </button>
     </div>
