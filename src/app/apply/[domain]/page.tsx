@@ -18,20 +18,19 @@ export default function DomainPage({
           <h1 className="pt-3 text-center font-mono text-5xl font-bold uppercase text-white md:text-7xl">
             {domain}
           </h1>
-          <p className="pt-4 text-sm md:text-base lg:text-lg">
+          <p className="pt-4 text-center text-sm md:text-base lg:text-lg">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
-            esse consectetur minima fugiat doloribus. Deleniti maiores sit
-            repellendus mollitia ducimus.
+            esse consectetur minima fugiat doloribus.
           </p>
         </div>
       </div>
 
       <div className="flex justify-center pb-20">
-        <form className="max-w-[80vw]">
+        <form className="max-w-[80vw] space-y-6">
           <div className="flex flex-col gap-4">
             <label
               htmlFor="ques1"
-              className="text-sm md:mt-8 md:text-base lg:mt-12 lg:text-lg"
+              className="text-justify text-sm md:text-base lg:text-lg"
             >
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
               esse consectetur minima fugiat doloribus. Deleniti maiores sit
@@ -48,7 +47,7 @@ export default function DomainPage({
           <div className="flex flex-col gap-4">
             <label
               htmlFor="ques2"
-              className="text-sm md:mt-8 md:text-base lg:mt-12 lg:text-lg"
+              className="text-justify text-sm md:text-base lg:text-lg"
             >
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
               esse consectetur minima fugiat doloribus. Deleniti maiores sit
@@ -63,7 +62,7 @@ export default function DomainPage({
           </div>
 
           <div className="flex flex-col gap-4">
-            <p className="text-sm md:mt-8 md:text-base lg:mt-12 lg:text-lg">
+            <p className="text-justify text-sm md:text-base lg:text-lg">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
               esse consectetur minima fugiat doloribus. Deleniti maiores sit
               repellendus mollitia ducimus.
