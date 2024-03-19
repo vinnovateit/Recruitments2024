@@ -1,5 +1,5 @@
 import AboutUs from "../components/Aboutus";
-import Landingpage from "~/components/landingpage";
+import { Landingpage } from "~/components/landingpage";
 import JoinOurCommunity from "~/components/JoinOurCommunity";
 import DomainsPage from "~/components/domainsPage";
 
