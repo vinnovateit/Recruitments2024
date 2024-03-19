@@ -10,19 +10,19 @@ import { FaLinkedin } from "react-icons/fa";
 
 const JoinOurCommunity: React.FC = () => {
   return (
-    <section className="min-w-full bg-[#1E003E] text-white">
-      {/*<div className='absolute top-0 right-0'>
+    <section className="mt-[24px] pb-40 absolute min-w-full bg-[#1E003E] text-white">
+      <div className='absolute top-0 right-0'>
                 <Image
                 src={illustration3}
                 alt="sjdd"
-                className='relative top-0 md:h-16 md:w-16 h-10 w-10'/>
-    </div>*/}
-      <div className="flex justify-center gap-[2.08rem] sm:gap-[0.4rem] md:gap-[1.4rem] lg:gap-[1.9rem] xl:gap-[0.7rem]">
+                className='relative top-0 md:h-16 md:w-16 lg:h-20 lg:w-20 xl:h-24 xl:w-24 h-9 w-9'/>
+  </div>
+      <div className=" mt-10 sm:mt-32 flex justify-between gap-[3.5rem] sm:gap-[0.4rem] md:gap-[1.4rem] lg:gap-[1.9rem] xl:gap-[0.7rem]">
         <Image
           src={illustration2}
           alt="illustration"
           style={{ objectFit: "cover" }}
-          className="relative top-[30%] h-[11rem] w-[9.9rem] sm:h-[12rem] sm:w-[11rem] md:h-[15rem] md:w-[13.9rem] lg:h-[18rem] lg:w-[18.5rem] xl:h-[20.1rem] xl:w-[18.7rem] "
+          className="relative top-[30%] h-[8rem] w-[7.2rem] sm:h-[12rem] sm:w-[11rem] md:h-[15rem] md:w-[13.9rem] lg:h-[18rem] lg:w-[18.5rem] xl:h-[20.1rem] xl:w-[18.7rem] "
         />
 
         <div className="hidden text-center font-Fixture tracking-wider sm:flex sm:flex-col sm:pt-14 sm:text-5xl md:pt-16 md:text-5xl lg:pt-16 lg:text-7xl xl:pt-14 xl:text-9xl">
@@ -39,7 +39,7 @@ const JoinOurCommunity: React.FC = () => {
           src={illustration1}
           alt="illustration"
           style={{ objectFit: "cover" }}
-          className="relative top-[30%] h-[10.9rem] w-[8.5rem] sm:h-[12rem] sm:w-[10.4rem] md:h-[14.8rem] md:w-[10.9rem] lg:h-[18.4rem] lg:w-[15rem] xl:h-[20rem] xl:w-[14.9rem]"
+          className="relative top-[30%] h-[8rem] w-[6rem] sm:h-[12rem] sm:w-[10.4rem] md:h-[14.8rem] md:w-[10.9rem] lg:h-[18.4rem] lg:w-[15rem] xl:h-[20rem] xl:w-[14.9rem]"
         />
       </div>
 
