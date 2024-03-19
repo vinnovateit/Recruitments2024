@@ -5,7 +5,8 @@ import profilePic from "public/lp_img.png";
 import "../styles/landingpage/landingpage.css";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-export const Landingpage = () => {
+
+export default function Landingpage() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/apply";
 
@@ -112,4 +113,4 @@ export const Landingpage = () => {
       </button>
     </div>
   );
-};
+}
