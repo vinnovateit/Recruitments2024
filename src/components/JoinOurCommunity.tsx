@@ -22,7 +22,7 @@ const JoinOurCommunity: React.FC = () => {
           src={illustration2}
           alt="illustration"
           style={{ objectFit: "cover" }}
-          className="relative top-[30%] h-[11rem] w-[9.9rem] sm:h-[12rem] sm:w-[11rem] md:h-[15rem] md:w-[13.9rem] lg:h-[18rem] lg:w-[18.5rem] xl:h-[22.1rem] xl:w-[20.7rem] "
+          className="relative top-[30%] h-[11rem] w-[9.9rem] sm:h-[12rem] sm:w-[11rem] md:h-[15rem] md:w-[13.9rem] lg:h-[18rem] lg:w-[18.5rem] xl:h-[20.1rem] xl:w-[18.7rem] "
         />
 
         <div className="hidden text-center font-Fixture tracking-wider sm:flex sm:flex-col sm:pt-14 sm:text-5xl md:pt-16 md:text-5xl lg:pt-16 lg:text-7xl xl:pt-14 xl:text-9xl">
@@ -39,7 +39,7 @@ const JoinOurCommunity: React.FC = () => {
           src={illustration1}
           alt="illustration"
           style={{ objectFit: "cover" }}
-          className="relative top-[30%] h-[10.9rem] w-[8.5rem] sm:h-[12rem] sm:w-[10.4rem] md:h-[14.8rem] md:w-[10.9rem] lg:h-[18.4rem] lg:w-[15rem] xl:h-[22.5rem] xl:w-[17.9rem]"
+          className="relative top-[30%] h-[10.9rem] w-[8.5rem] sm:h-[12rem] sm:w-[10.4rem] md:h-[14.8rem] md:w-[10.9rem] lg:h-[18.4rem] lg:w-[15rem] xl:h-[20rem] xl:w-[14.9rem]"
         />
       </div>
 
