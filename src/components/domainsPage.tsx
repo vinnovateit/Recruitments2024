@@ -25,9 +25,9 @@ function  DomainsPage(){
         </div>
       </div>
     </div>
-    <div className="h-36 w-full bg-[#1E003E] flex justify-end items-end flex-col">
+    {/*<div className="h-36 w-full bg-[#1E003E] flex justify-end items-end flex-col">
     <img src="/waveicon.png" alt="" />
-    </div>
+</div>*/}
     </>
 }
 
