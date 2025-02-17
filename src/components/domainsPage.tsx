@@ -1,34 +1,72 @@
-function  DomainsPage(){
-    return <>
-    <div className="domainsbody h-52 w-full bg-[#1E003E] flex justify-start items-start flex-col scrollbar-none">
-    <img src="/staricon.png" alt="" className="w-20 sm:scale-100" />
-    </div>
-    <div className="h-screen w-full bg-[#1E003E] flex justify-start items-start flex-col">
-      <div className="heading h-64 px-8 sm:scale-100 sm:px-20 py-4 flex justify-between flex-col sm:flex-row items-start w-full">
-        <div className="headingsection">
-        <img src="/OUR.png" alt="asdf" className="w-28 h-18 sm:w-40"/>
-        <span className="text-[56px] sm:text-[80px] font-bold text-white">DOMAINS</span>
+import React from 'react';
+
+function DomainsPage() {
+  return (
+    <div className='font-Fixture'>
+      <div className="mt-[10vh] min-h-screen bg-[#1E003E] flex flex-col">
+        {/* Top section with star icon */}
+        {/* <div className="w-full p-4 md:p-6 lg:p-8">
+          <img 
+            src="/staricon.png" 
+            alt="Star Icon" 
+            className="w-12 md:w-16 lg:w-20"
+          />
+        </div> */}
+
+        {/* Header section */}
+        <div className="w-full  py-4 md:py-6 lg:py-8">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center relative">
+            <div className="ml-9 max-w-[80vw] pt-3 md:pl-8 md:pt-10">
+          <div className=" font-outline-2 text-6xl font-bold text-specpurple md:text-7xl">
+            OUR
+          </div>
+          <div className="mr-2 pt-3 text-5xl font-bold text-white md:text-7xl">
+            DOMAINS
+          </div>
         </div>
-        <div className="thundersection ">
-          <img src="/thundericon.png" alt="Thunderromaing Icons" className="scale-[0.2] sm:scale-75 -translate-y-20 translate-x-36 sm:translate-y-12 sm:translate-x-0" />
+            
+            {/* Fixed position for thunder icon */}
+            <div className="absolute right-0">
+              <img 
+                src="/thundericon.png" 
+                alt="Thunder Icon" 
+                className="w-20 md:w-32"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Cards section */}
+        <div className="flex-grow w-full px-4 md:px-8 lg:px-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+            <div className="transform transition-transform hover:scale-105">
+              <img 
+                src="/managementcard.png" 
+                alt="Management" 
+                className="w-full max-w-[280px] lg:max-w-[320px]"
+              />
+            </div>
+            
+            <div className="transform transition-transform hover:scale-105">
+              <img 
+                src="/techcard.png" 
+                alt="Technical" 
+                className="w-full max-w-[280px] lg:max-w-[320px]"
+              />
+            </div>
+            
+            <div className="transform transition-transform hover:scale-105 md:col-span-2 lg:col-span-1">
+              <img 
+                src="/designcard.png" 
+                alt="Design" 
+                className="w-full max-w-[280px] lg:max-w-[320px]"
+              />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="domains h-auto w-full sm:w-full flex justify-center items-center flex-col sm:flex-row">
-        <div className="management px-0 sm:px-16 pb-8">
-          <img src="/managementcard.png" alt="Management" className="w-44 sm:w-80"  />
-        </div>
-        <div className="technical px-0 sm:px-16 pb-8">
-          <img src="/techcard.png" alt="Management" className="w-44 sm:w-80"  />
-        </div>
-        <div className="design px-0 sm:px-16">
-          <img src="/designcard.png" alt="Management" className="w-44 sm:w-80"  />
-        </div>
-      </div>
     </div>
-    {/*<div className="h-36 w-full bg-[#1E003E] flex justify-end items-end flex-col">
-    <img src="/waveicon.png" alt="" />
-</div>*/}
-    </>
+  );
 }
 
 export default DomainsPage;
