@@ -13,15 +13,15 @@ const AboutUs = (props: Props) => {
   return (
     <section
       id="aboutus"
-      className="flex h-screen w-full flex-col items-center justify-center bg-specpurple"
+      className="flex h-screen w-full flex-col items-center justify-center font-Fixture "
     >
       <div className="relative">
         {/* ABOUT US TEXT */}
         <div className="ml-9 max-w-[80vw] pt-3 md:pl-8 md:pt-10">
-          <div className=" font-outline-2 font-mono text-6xl font-bold text-specpurple md:text-7xl">
+          <div className=" font-outline-2 text-6xl font-bold text-specpurple md:text-7xl">
             ABOUT
           </div>
-          <div className="mr-2 pt-3 font-mono text-5xl font-bold text-white md:text-7xl">
+          <div className="mr-2 pt-3 text-5xl font-bold text-white md:text-7xl">
             VINNOVATEIT
           </div>
         </div>
@@ -53,7 +53,7 @@ const AboutUs = (props: Props) => {
           </p>
         </div>
         {/* Image 2 */}
-        <div className="mt-12 size-24 md:mt-5">
+        <div className="mt-12 w-20 md:w-32 md:mt-5">
           <img src={image2URL} alt="star-graphic" />
         </div>
       </div>

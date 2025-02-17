@@ -10,14 +10,14 @@ import { FaLinkedin } from "react-icons/fa";
 
 const JoinOurCommunity: React.FC = () => {
   return (
-    <section className="mt-[24px] pb-40 absolute min-w-full bg-[#1E003E] text-white">
+    <section className="pb-40 absolute min-w-full bg-[#1E003E] text-white">
       <div className='absolute top-0 right-0'>
                 <Image
                 src={illustration3}
                 alt="sjdd"
                 className='relative top-0 md:h-16 md:w-16 lg:h-20 lg:w-20 xl:h-24 xl:w-24 h-9 w-9'/>
   </div>
-      <div className=" mt-10 sm:mt-32 flex justify-between gap-[3.5rem] sm:gap-[0.4rem] md:gap-[1.4rem] lg:gap-[1.9rem] xl:gap-[0.7rem]">
+      <div className="sm:mt-32 flex justify-between gap-[3.5rem] sm:gap-[0.4rem] md:gap-[1.4rem] lg:gap-[1.9rem] xl:gap-[0.7rem]">
         <Image
           src={illustration2}
           alt="illustration"
