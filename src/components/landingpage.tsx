@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import heroImage from "public/lp_img.png";
+import Link from "next/link";
 
 export const Landingpage = () => {
   return (
@@ -44,9 +45,11 @@ export const Landingpage = () => {
           <p className="mt-4 text-white text-base md:text-lg font-semibold">
             VinnovateIT, because everybody needs a family in college!
           </p>
-          <button className="mt-6 px-8 py-2 md:px-6 md:py-3 bg-[#9FFF47] md:bg-pink-500 text-black md:text-white uppercase font-bold rounded-none md:rounded-lg transition-all duration-200 hover:bg-pink-300 hover:scale-110">
-            REGISTER NOW
-          </button>
+         <Link href="/apply">
+            <button className="mt-6 px-8 py-2 md:px-6 md:py-3 bg-[#9FFF47] md:bg-pink-500 text-black md:text-white uppercase font-bold rounded-none md:rounded-lg transition-all duration-200 hover:bg-pink-300 hover:scale-110">
+              REGISTER NOW
+            </button>
+          </Link>
         </div>
 
         {/* RIGHT IMAGE SECTION */}

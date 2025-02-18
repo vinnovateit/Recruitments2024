@@ -1,7 +1,10 @@
 import React from "react";
+import DomainSelectionForm from "~/components/DomainSelectionForm";
 
-const page = () => {
-  return <div>page</div>;
+const Page = () => {
+  return <div className="">
+    <DomainSelectionForm/>
+  </div>;
 };
 
-export default page;
+export default Page;
