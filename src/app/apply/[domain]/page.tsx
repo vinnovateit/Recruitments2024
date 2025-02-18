@@ -66,26 +66,35 @@ const DomainPage = ({
     }
   };
 
-  const handleSubmit = async () => {
-    try {
-      // Save final form data
-      localStorage.setItem(`formData_${domain}`, JSON.stringify(formData));
-      
-      // Collect all form data
-      const allFormData = selectedDomains.map(d => ({
-        domain: d,
-        data: JSON.parse(localStorage.getItem(`formData_${d}`) || '{"answers":[],"files":[]}')
-      }));
+ const handleSubmit = async () => {
+  try {
+    // Save the current form data for this domain
+    localStorage.setItem(`formData_${domain}`, JSON.stringify(formData));
 
-      // TODO: Send data to your API
-      console.log('Submitting all form data:', allFormData);
-      
-      router.push('/thank-you');
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      // Handle error appropriately
-    }
-  };
+    // Retrieve and include `basicInfo`
+    const basicInfo = JSON.parse(localStorage.getItem("basicInfo") || "{}");
+
+    // Collect all form data for selected domains
+    const allFormData = selectedDomains.map((d) => ({
+      domain: d,
+      data: JSON.parse(localStorage.getItem(`formData_${d}`) || '{"answers":[],"files":[]}'),
+    }));
+
+    // Include `basicInfo` in the final submission object
+    const allAnswers = {
+      basicInfo, // Add basic information
+      domains: allFormData, // Add answers from all domains
+    };
+
+    // TODO: Send data to your API
+    console.log(allAnswers);
+
+    // Redirect to the thank-you page
+    router.push("/thank-you");
+  } catch (error) {
+    console.error("Error submitting form:", error);
+  }
+};
 
   // Validate domain
   if (!domain || !whiteList.includes(domain as Domain)) {

@@ -58,6 +58,7 @@ const DomainSelectionForm: React.FC = () => {
     
     if (!Object.values(newErrors).includes(true)) {
       localStorage.setItem('formData', JSON.stringify(selectedDomains));
+      localStorage.setItem('basicInfo', JSON.stringify(answers));
       console.log("Selected domains:", selectedDomains);
       console.log("Answers:", answers);
       router.push(`/apply/${selectedDomains[0]}`);
