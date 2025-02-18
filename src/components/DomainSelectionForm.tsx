@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 
 const DomainSelectionForm: React.FC = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const [selectedDomains, setSelectedDomains] = useState<string[]>([]);
   const [answers, setAnswers] = useState({
     name: '',
@@ -64,6 +66,21 @@ const DomainSelectionForm: React.FC = () => {
       router.push(`/apply/${selectedDomains[0]}`);
     }
   };
+
+  useEffect(() => {
+    if (session?.user?.name) {
+      const parts = session.user.name.split(' ');
+      const regNo = parts[parts.length - 1];
+      const fullName = parts.slice(0, -1).join(' ');
+
+      setAnswers(prev => ({
+        ...prev,
+        name: fullName,
+        registrationNumber: regNo ?? ''
+      }));
+
+    }
+  }, [session]);
 
   return (
     <>
@@ -132,7 +149,10 @@ const DomainSelectionForm: React.FC = () => {
                 placeholder={field === "name" ? "FULL NAME" : field === "registrationNumber" ? "2YBAAXXXX" : "VALID WHATSAPP NUMBER"}
                 value={answers[field as keyof typeof answers]}
                 onChange={(e) => handleAnswerChange(field as keyof typeof answers, e.target.value)}
-                className="w-full p-[0.7rem] bg-specpurple rounded text-white placeholder-gray-400 border border-purple-800 focus:outline-none focus:border-purple-500 text-lg"
+                readOnly={field === "name" || field === "registrationNumber"}
+                className={`w-full p-[0.7rem] bg-specpurple rounded text-white placeholder-gray-400 border border-purple-800 focus:outline-none focus:border-purple-500 text-lg ${
+                  (field === "name" || field === "registrationNumber") ? "opacity-70 cursor-not-allowed" : ""
+                }`}
                 required
               />
               {errors[field as keyof typeof errors] && <p className="text-red-500">This field is required.</p>}

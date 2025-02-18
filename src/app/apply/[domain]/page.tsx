@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import LoginScreen from "~/components/LoginScreen";
 
 type Domain = "technical" | "management" | "design";
 
@@ -16,6 +18,7 @@ const DomainPage = ({
   params: { domain: string }
 }) => {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const [selectedDomains, setSelectedDomains] = useState<Domain[]>([]);
   const [currentDomainIndex, setCurrentDomainIndex] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
@@ -24,6 +27,16 @@ const DomainPage = ({
   });
   
   const whiteList: Domain[] = ["technical", "management", "design"];
+
+  if (status === "loading") {
+    return <div className="flex justify-center items-center min-h-screen bg-specpurple">
+      <div className="text-white">Loading...</div>
+    </div>;
+  }
+
+  if (!session) {
+    return <LoginScreen />;
+  }
 
   useEffect(() => {
     const storedData = localStorage.getItem('formData');
@@ -82,17 +95,37 @@ const DomainPage = ({
 
     // Include `basicInfo` in the final submission object
     const allAnswers = {
-      basicInfo, // Add basic information
-      domains: allFormData, // Add answers from all domains
+      basicInfo,
+      domains: allFormData,
     };
 
-    // TODO: Send data to your API
-    console.log(allAnswers);
+    // Send data to the API
+    const response = await fetch('/api/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(allAnswers),
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+      throw new Error(result.error || 'Submission failed');
+    }
+
+    // Clear local storage after successful submission
+    selectedDomains.forEach(d => {
+      localStorage.removeItem(`formData_${d}`);
+    });
+    localStorage.removeItem('basicInfo');
+    localStorage.removeItem('formData');
 
     // Redirect to the thank-you page
     router.push("/thank-you");
   } catch (error) {
     console.error("Error submitting form:", error);
+    alert('Failed to submit application. Please try again.');
   }
 };
 

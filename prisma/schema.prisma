@@ -73,3 +73,36 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Application {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    
+    // Basic Info
+    name      String   @db.VarChar(255)
+    regNo     String   @db.VarChar(10)
+    email     String   @db.VarChar(255)
+    phone     String   @db.VarChar(10)
+    
+    // Domain Submissions
+    domainSubmissions DomainSubmission[]
+    
+    @@unique([regNo])
+    @@unique([email])
+    @@index([regNo])
+    @@index([email])
+}
+
+model DomainSubmission {
+    id            String   @id @default(cuid())
+    applicationId String
+    domain        String
+    answers       String[] // Array of answers for the domain questions
+    
+    application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+    
+    @@unique([applicationId, domain])
+    @@index([applicationId])
+    @@index([domain])
+}
