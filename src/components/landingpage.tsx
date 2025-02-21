@@ -1,9 +1,61 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import heroImage from "public/lp_img.png";
 import Link from "next/link";
+import gsap from "gsap";
 
 export const Landingpage = () => {
+  const buttonRef = useRef(null);
+  const imageRef = useRef(null);
+  const buttonOutlineRef = useRef(null);
+
+  useEffect(() => {
+    // Floating animation for the image
+    gsap.to(imageRef.current, {
+      y: -20,
+      duration: 2,
+      ease: "power1.inOut",
+      yoyo: true,
+      repeat: -1
+    });
+
+    // Button hover animation setup
+    const button = buttonRef.current;
+    const outline = buttonOutlineRef.current;
+
+    // Initial state of outline
+    gsap.set(outline, {
+      scale: 1.1,
+      opacity: 0,
+    });
+
+    // Create hover animation
+    const hoverTimeline = gsap.timeline({ paused: true });
+    hoverTimeline
+      .to(outline, {
+        opacity: 1,
+        duration: 0.3,
+        ease: "power2.out"
+      })
+      .to(button, {
+        scale: 1.1,
+        duration: 0.3,
+        ease: "power2.out"
+      }, 0);
+
+    // Add event listeners
+    button.addEventListener("mouseenter", () => hoverTimeline.play());
+    button.addEventListener("mouseleave", () => hoverTimeline.reverse());
+
+    // Cleanup
+    return () => {
+      button.removeEventListener("mouseenter", () => hoverTimeline.play());
+      button.removeEventListener("mouseleave", () => hoverTimeline.reverse());
+    };
+  }, []);
+
   return (
     <div className="min-h-screen relative font-Fixture">
       {/* SVG decoration */}
@@ -45,28 +97,37 @@ export const Landingpage = () => {
           <p className="mt-4 text-white text-base md:text-lg font-semibold">
             VinnovateIT, because everybody needs a family in college!
           </p>
-         <Link href="/apply">
-            <button className="mt-6 px-8 py-2 md:px-6 md:py-3 bg-[#9FFF47] md:bg-pink-500 text-black md:text-white uppercase font-bold rounded-none md:rounded-lg transition-all duration-200 hover:bg-pink-300 hover:scale-110">
-              REGISTER NOW
-            </button>
-          </Link>
+          <div className="relative inline-block mt-6">
+            <Link href="/apply">
+              <button
+                ref={buttonRef}
+                className="z-10 px-8 py-2 md:px-6 md:py-3 bg-pink-500 text-white uppercase font-bold rounded-none transition-all duration-200 hover:bg-[#9FFF47] hover:text-black"
+              >
+                REGISTER NOW
+              </button>
+            </Link>
+            {/* Button outline */}
+            <div
+              ref={buttonOutlineRef}
+              className="absolute inset-0 border-2 border-white rounded-none pointer-events-none"
+            ></div>
+          </div>
         </div>
 
         {/* RIGHT IMAGE SECTION */}
         <div className="relative md:w-1/2 flex justify-center mt-8 md:mt-0">
-          <Image
-            src={heroImage}
-            alt="Illustration"
-            className="max-w-full"
-            height={500}
-            width={750}
-            priority
-          />
+          <div ref={imageRef}>
+            <Image
+              src={heroImage}
+              alt="Illustration"
+              className="max-w-full"
+              height={500}
+              width={750}
+              priority
+            />
+          </div>
         </div>
       </div>
-
-      {/* Mobile-only gradient overlay */}
-      <div className="absolute bottom-0 left-0 w-full h-1/2 z-10 md:hidden" />
     </div>
   );
 };
