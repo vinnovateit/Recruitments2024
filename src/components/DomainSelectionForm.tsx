@@ -100,7 +100,7 @@ const DomainSelectionForm: React.FC = () => {
                 onClick={() => handleDomainChange(domain)}
               >
                 {selectedDomains.includes(domain) && (
-                  <span className="text-lime-400 text-lg font-extrabold">✓</span>
+                  <span className="text-[#9FFF47] text-lg font-extrabold">✓</span>
                 )}
               </div>
               <label className="text-white text-lg cursor-pointer" onClick={() => handleDomainChange(domain)}>
