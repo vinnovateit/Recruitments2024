@@ -160,13 +160,13 @@ const AboutUs = (props: Props) => {
         <div className="ml-9 max-w-[80vw] pt-3 md:pl-8 md:pt-10 md:mt-[3.5rem] ">
           <div 
             ref={titleAboutRef}
-            className="font-outline-2 text-6xl font-bold text-specpurple md:text-7xl"
+            className="font-outline-2 text-4xl md:text-6xl lg:text-7xl font-bold text-specpurple"
           >
             ABOUT
           </div>
           <div 
             ref={titleVinnovateRef}
-            className="mr-2 pt-3 text-5xl font-bold text-white md:text-7xl"
+            className="mr-2 pt-3 text-4xl md:text-6xl lg:text-7xl font-bold text-white"
           >
             VINNOVATEIT
           </div>

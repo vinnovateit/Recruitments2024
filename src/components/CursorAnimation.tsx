@@ -130,6 +130,15 @@ const CustomCursor = () => {
       });
     };
 
+    // Add style to remove cursor from buttons
+    const style = document.createElement('style');
+    style.textContent = `
+      button {
+        cursor: none !important;
+      }
+    `;
+    document.head.appendChild(style);
+
     // Event listeners
     window.addEventListener('mousemove', updateCursor);
     document.querySelectorAll('a, button, img').forEach(el => {
@@ -143,6 +152,7 @@ const CustomCursor = () => {
         el.removeEventListener('mouseenter', handleMouseEnter);
         el.removeEventListener('mouseleave', handleMouseLeave);
       });
+      document.head.removeChild(style);
     };
   }, []);
 

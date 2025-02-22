@@ -155,13 +155,13 @@ const DomainsPage: React.FC = () => {
               <div className="ml-4">
                 <div
                   ref={ourTextRef}
-                  className="font-outline-2 text-6xl font-bold text-specpurple md:text-7xl opacity-0"
+                  className="font-outline-2 text-4xl md:text-6xl lg:text-7xl font-bold text-specpurple  opacity-0"
                 >
                   OUR
                 </div>
                 <div
                   ref={domainsTextRef}
-                  className="mr-2 pt-3 text-5xl font-bold text-white md:text-7xl opacity-0"
+                  className="mr-2 pt-3 text-4xl md:text-6xl lg:text-7xl font-bold text-white opacity-0"
                 >
                   DOMAINS
                 </div>
@@ -188,7 +188,7 @@ const DomainsPage: React.FC = () => {
               <img
                 src="/managementcard.png"
                 alt="Management"
-                className="w-full max-w-[280px] lg:max-w-[320px] hover:scale-105"
+                className="w-full max-w-[200px] lg:max-w-[320px] hover:scale-105"
               />
             </div>
 
@@ -199,7 +199,7 @@ const DomainsPage: React.FC = () => {
               <img
                 src="/techcard.png"
                 alt="Technical"
-                className="w-full max-w-[280px] lg:max-w-[320px] hover:scale-105"
+                className="w-full max-w-[200px] lg:max-w-[320px] hover:scale-105"
               />
             </div>
 
@@ -210,7 +210,7 @@ const DomainsPage: React.FC = () => {
               <img
                 src="/designcard.png"
                 alt="Design"
-                className="w-full max-w-[280px] lg:max-w-[320px] hover:scale-105"
+                className="w-full max-w-[200px] lg:max-w-[320px] hover:scale-105"
               />
             </div>
           </div>
