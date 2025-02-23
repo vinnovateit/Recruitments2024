@@ -104,7 +104,7 @@ export const Landingpage = () => {
           <Link href="/apply" className="group inline-block">
             <button 
               ref={buttonRef}
-              className="z-10 mt-6 px-8 py-2 md:px-6 md:py-3 bg-pink-500 text-white uppercase font-bold rounded-none md:rounded-lg transition-all duration-200 group-hover:bg-[#9FFF47] group-hover:text-black hover:scale-110"
+              className="z-10 mt-6 px-8 py-2 md:px-6 md:py-3 bg-pink-500 text-white uppercase font-bold rounded-none md:rounded-lg transition-all duration-200 group-hover:bg-[#9FFF47] group-hover:text-black hover:scale-110 pointer-events-none"
             >
               REGISTER NOW
             </button>

@@ -18,6 +18,10 @@
     src: url('/fonts/Fixture-ExtraBold.ttf') format('truetype');
   }
 
+  *{
+    cursor: none;
+  }
+
   
 
 
