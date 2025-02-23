@@ -25,14 +25,12 @@ const DomainsPage: React.FC = () => {
       gsap.registerPlugin(ScrollTrigger);
     }
     const initAnimations = () => {
-      // Initial setup for star
       gsap.set(starGraphicRef.current, {
         scale: 0,
         opacity: 0,
         rotation: -180
       });
 
-      // Star animation
       if (starGraphicRef.current) {
         gsap.to(starGraphicRef.current, {
           scale: 1,
@@ -140,8 +138,7 @@ const DomainsPage: React.FC = () => {
 
   return (
     <div className="font-Fixture">
-      <div className="mt-16 md:mt-40 min-h-screen bg-[#1E003E] flex flex-col relative">
-        {/* Star positioned at the corner */}
+      <div className="mt-0 min-h-screen bg-[#1E003E] flex flex-col relative"> {/* Removed top margin */}
         <div 
           ref={starGraphicRef}
           className="absolute top-0 left-0 w-20 md:w-32 mt-4 md:mt-8 opacity-0"
@@ -155,7 +152,7 @@ const DomainsPage: React.FC = () => {
               <div className="ml-4">
                 <div
                   ref={ourTextRef}
-                  className="font-outline-2 text-4xl md:text-6xl lg:text-7xl font-bold text-specpurple  opacity-0"
+                  className="font-outline-2 text-4xl md:text-6xl lg:text-7xl font-bold text-specpurple opacity-0"
                 >
                   OUR
                 </div>
@@ -179,7 +176,7 @@ const DomainsPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex-grow w-full px-4 md:px-8 lg:px-20">
+        <div className="flex-grow w-full px-4 md:px-8 lg:px-20 pb-16"> {/* Added bottom padding */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
             <div
               ref={addToCardsRef}

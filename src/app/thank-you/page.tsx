@@ -103,7 +103,7 @@ const Page: React.FC = () => {
       {/* Left Image */}
       <div 
         ref={leftImageRef}
-        className="fixed left-0 top-1/2 -translate-y-1/2 hidden sm:block"
+        className="absolute left-0 top-1/2 -translate-y-1/2 hidden sm:block"
       >
         <Image
           src={illustration2}
@@ -116,7 +116,7 @@ const Page: React.FC = () => {
       {/* Right Image */}
       <div 
         ref={rightImageRef}
-        className="fixed right-0 top-1/2 -translate-y-1/2 hidden sm:block"
+        className="absolute right-0 top-1/2 -translate-y-1/2 hidden sm:block"
       >
         <Image
           src={illustration1}
@@ -146,7 +146,7 @@ const Page: React.FC = () => {
           ref={socialsRef}
           className="mt-10"
         >
-          <ul className="flex gap-6 md:gap-8 lg:gap-10">
+          <ul className="flex gap-6 md:gap-8 lg:gap-10 cursor-none">
             <li>
               <Link
                 href="https://www.instagram.com/vinnovateit/"
@@ -188,7 +188,7 @@ const Page: React.FC = () => {
           className="mt-10"
         >
           <Link href="/">
-            <button className="px-4 py-2 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold text-white bg-purple-600 rounded-lg shadow-lg hover:bg-purple-700 transition">
+            <button className="px-4 py-2 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold text-white bg-purple-600 rounded-lg shadow-lg hover:bg-purple-700 transition pointer-events-none">
               Go Back to Home
             </button>
           </Link>
