@@ -96,14 +96,14 @@ const DomainSelectionForm: React.FC = () => {
           {["management", "design", "technical"].map(domain => (
             <div key={domain} className="flex items-center">
               <div 
-                className={`relative w-7 h-7 mr-3 cursor-pointer border-2 border-white flex items-center justify-center ${selectedDomains.includes(domain) ? 'bg-specpurple' : 'bg-specpurple'}`}
+                className={`relative w-7 h-7 mr-3 border-2 border-white flex items-center justify-center ${selectedDomains.includes(domain) ? 'bg-specpurple' : 'bg-specpurple'}`}
                 onClick={() => handleDomainChange(domain)}
               >
                 {selectedDomains.includes(domain) && (
                   <span className="text-[#9FFF47] text-lg font-extrabold">✓</span>
                 )}
               </div>
-              <label className="text-white text-lg cursor-pointer" onClick={() => handleDomainChange(domain)}>
+              <label className="text-white text-lg" onClick={() => handleDomainChange(domain)}>
                 {domain.toUpperCase()}
               </label>
             </div>

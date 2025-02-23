@@ -22,7 +22,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} bg-specpurple`}>
+      <CursorAnimation/>
+      <body className={`font-sans ${inter.variable} bg-specpurple cursor-none pointer-events-none`}>
         <SessionProvider>
           {children}
         </SessionProvider>

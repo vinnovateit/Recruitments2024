@@ -6,8 +6,8 @@ import illustration1 from "public/assets/x36.png";
 import illustration2 from "public/assets/x34.png";
 import illustration3 from "public/assets/Group 414.png";
 import { AiFillInstagram } from "react-icons/ai";
-import { FaFacebook } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaGithub } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedin } from "react-icons/fa";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -151,8 +151,8 @@ const JoinOurCommunity: React.FC = () => {
   }, []);
 
   return (
-    <section className="pb-10 md:pb-8 absolute min-w-full bg-[#1E003E] text-white max-w-screen-lg overflow-hidden">
-      <div className='absolute top-0 right-0 overflow-hidden'>
+    <section className="pb-10 md:pb-8 absolute min-w-full bg-[#1E003E] text-white max-w-screen-lg overflow-hidden cursor-none">
+      <div className='absolute top-0 right-0 overflow-hidden pointer-events-none'>
         <Image
           src={illustration3}
           alt="sjdd"
@@ -210,32 +210,34 @@ const JoinOurCommunity: React.FC = () => {
             <a
               href="https://www.instagram.com/vinnovateit/?utm_source=ig_web_button_share_sheet"
               target="_blank"
+              className="group"
             >
-              <AiFillInstagram className="h-8 w-8 cursor-pointer md:h-9 md:w-9 lg:h-12 lg:w-12" />
+              <AiFillInstagram className="h-8 w-8 md:h-9 md:w-9 lg:h-12 lg:w-12 transition-all duration-300 text-white group-hover:text-pink-500 " />
+
             </a>
           </li>
           <li>
-            <a href="" target="_blank">
-              <FaFacebook className="h-7 w-7 cursor-pointer md:h-8 md:w-8 lg:h-11 lg:w-11" />
+            <a href="https://www.facebook.com/VinnovateIT/" target="_blank" className="group">
+              <FaFacebook className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-500" />
             </a>
           </li>
           <li>
-            <a href="" target="_blank">
-              <FaTwitter
-                size={48}
-                className="h-7 w-7 cursor-pointer md:h-8 md:w-8 lg:h-11 lg:w-11"
-              />
+            <a href="https://x.com/v_innovate_it" target="_blank" className="group">
+              <FaXTwitter className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-black" />
             </a>
           </li>
           <li>
             <a
               href="https://www.linkedin.com/company/v-innovate-it/"
               target="_blank"
+              className="group"
             >
-              <FaLinkedin
-                size={48}
-                className="h-7 w-7 cursor-pointer md:h-8 md:w-8 lg:h-11 lg:w-11"
-              />
+              <FaLinkedin className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-500" />
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/vinnovateit" target="_blank" className="group">
+              <FaGithub className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-800" />
             </a>
           </li>
         </ul>
