@@ -22,7 +22,7 @@ const CustomCursor = () => {
 
     // Animation ticker for smoother cursor trail
     gsap.to({}, {
-      duration: 0.008, // Faster update rate (was 0.016)
+      duration: 0.008, // Faster update rate
       repeat: -1,
       onRepeat: () => {
         // Update positions with minimal delay
@@ -30,18 +30,18 @@ const CustomCursor = () => {
           if (index === 0) return;
           const prevPos = cursorPositions[index - 1];
           gsap.to(pos, {
-            duration: 0.08,  // Faster following (was 0.15)
+            duration: 0.08,
             x: prevPos.x,
             y: prevPos.y,
-            ease: "power1.out",  // Slightly smoothed movement
+            ease: "power1.out",
           });
         });
 
         // Animate each cursor with tighter spacing
         cursors.forEach((cursor, index) => {
           gsap.to(cursor, {
-            duration: 0.08,  // Faster movement (was 0.15)
-            x: cursorPositions[index].x - (6 - index * 0.5),  // Tighter spacing (was 10 - index * 0.8)
+            duration: 0.08,
+            x: cursorPositions[index].x - (6 - index * 0.5),
             y: cursorPositions[index].y - (6 - index * 0.5),
             ease: "power1.out",
           });
@@ -62,16 +62,16 @@ const CustomCursor = () => {
         cursors.forEach((cursor, index) => {
           if (index === 0) {
             gsap.to(cursor, {
-              width: 20,  // Slightly smaller hover state
+              width: 20,
               height: 20,
               backgroundColor: "white",
               opacity: 1,
-              duration: 0.2,  // Faster transition
+              duration: 0.2,
             });
           } else {
             gsap.to(cursor, {
               opacity: 0,
-              duration: 0.1,  // Faster fade out
+              duration: 0.1,
             });
           }
         });
@@ -79,10 +79,10 @@ const CustomCursor = () => {
         cursors.forEach((cursor, index) => {
           if (index === 0) {
             gsap.to(cursor, {
-              width: 24,
-              height: 24,
-              filter: "blur(3px)",  // Slightly reduced blur
-              backgroundColor: "rgba(255, 255, 255, 0.6)",
+              width: 32,
+              height: 32,
+              backgroundColor: "transparent",
+              border: "2px solid rgb(74, 222, 128)",
               opacity: 1,
               duration: 0.2,
             });
@@ -97,7 +97,7 @@ const CustomCursor = () => {
         cursors.forEach((cursor, index) => {
           if (index === 0) {
             gsap.to(cursor, {
-              width: 32,  // Slightly smaller button hover
+              width: 32,
               height: 32,
               backgroundColor: "rgba(74, 222, 128, 0.8)",
               opacity: 1,
@@ -117,12 +117,13 @@ const CustomCursor = () => {
       // Reset to original trail state
       cursors.forEach((cursor, index) => {
         gsap.to(cursor, {
-          width: 16 - index * 1,  // Match initial sizes
+          width: 16 - index * 1,
           height: 16 - index * 1,
           backgroundColor: "rgba(74, 222, 128, " + (1 - index * 0.1) + ")",
+          border: "none",
           filter: "blur(0px)",
           opacity: 1,
-          duration: 0.2,  // Faster reset
+          duration: 0.2,
         });
       });
     };

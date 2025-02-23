@@ -135,7 +135,7 @@ const DomainSelectionForm: React.FC = () => {
         <div className="flex justify-center mt-12">
           <button
             onClick={handleNext}
-            className="bg-pink-500 text-white px-10 py-3 rounded text-lg font-medium hover:bg-pink-600 transition-colors"
+            className="bg-pink-500 text-white hover:text-black px-10 py-3 rounded text-lg font-medium hover:bg-[#9FFF47] transition-colors"
           >
             NEXT →
           </button>
