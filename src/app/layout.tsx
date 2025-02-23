@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       
-      <body className={`font-sans ${inter.variable} bg-specpurple pointer cursor-none`}>{children}</body>
+      <body className={`font-sans ${inter.variable} bg-specpurple pointer`}>{children}</body>
     </html>
   );
 }
