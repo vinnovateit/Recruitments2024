@@ -60,11 +60,11 @@ export const Landingpage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen relative font-Fixture">
+    <div className="relative font-Fixture">
       {/* SVG decoration */}
       <svg
         ref={svgRef}
-        className="absolute top-0 left-0 w-16 md:w-32 lg:w-40 ml-[-1.2vw]"
+        className="absolute top-0 left-0 w-24 md:w-32 lg:w-40 ml-[-1.2vw]"
         viewBox="0 0 129 95"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -102,17 +102,20 @@ export const Landingpage = () => {
             VinnovateIT, because everybody needs a family in college!
           </p>
           <Link href="/apply" className="group inline-block">
-            <button 
-              ref={buttonRef}
-              className="z-10 mt-6 px-8 py-2 md:px-6 md:py-3 bg-pink-500 text-white uppercase font-bold rounded-none md:rounded-lg transition-all duration-200 group-hover:bg-[#9FFF47] group-hover:text-black hover:scale-110 pointer-events-none"
-            >
-              REGISTER NOW
-            </button>
+          <button
+  ref={buttonRef}
+  className="relative z-10 mt-6 px-8 py-2 md:px-6 md:py-3 bg-pink-500 text-white uppercase font-bold rounded-none transition-transform duration-200 hover:scale-110 overflow-hidden group pointer-events-none"
+>
+  <span className="relative z-10 group-hover:text-black">REGISTER NOW</span>
+  <span className="absolute inset-0 bg-[#9FFF47] transition-transform duration-300 ease-in-out scale-y-0 origin-bottom group-hover:scale-y-100"></span>
+</button>
+
+
           </Link>
         </div>
 
         {/* RIGHT IMAGE SECTION - added more top margin for mobile */}
-        <div className="relative md:w-1/2 flex justify-center mt-12 py-5 md:mt-0 overflow-hidden">
+        <div className="relative md:w-1/2 flex justify-center mt-12 pt-5 md:mt-0 overflow-hidden">
           <div ref={heroImageRef}>
             <Image
               src={heroImage}

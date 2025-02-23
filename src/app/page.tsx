@@ -8,7 +8,7 @@ export default function HomePage() {
   return (
     <body className="cursor-none "style={{ backgroundColor: "#1E003E" }}>
       <CustomCursor/>
-      <div className="mb-32">
+      <div className="mb-16">
         <Landingpage />
       </div>
       <AboutUs />

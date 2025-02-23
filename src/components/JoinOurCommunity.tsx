@@ -156,7 +156,7 @@ const JoinOurCommunity: React.FC = () => {
         <Image
           src={illustration3}
           alt="sjdd"
-          className='relative top-0 md:h-16 md:w-16 lg:h-20 lg:w-20 xl:h-24 xl:w-24 h-9 w-9'
+          className='relative top-0 md:h-20 md:w-20 lg:h-24 lg:w-24 h-16 w-16'
         />
       </div>
       <div className="mt-12 sm:mt-24 flex justify-between">
