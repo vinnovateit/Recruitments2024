@@ -2,6 +2,7 @@
 
 import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
+import CursorAnimation from "~/components/CursorAnimation";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,7 +22,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable} bg-specpurple`}>
+      <CursorAnimation/>
+      <body className={`font-sans ${inter.variable} bg-specpurple cursor-none pointer-events-none`}>
         <SessionProvider>
           {children}
         </SessionProvider>

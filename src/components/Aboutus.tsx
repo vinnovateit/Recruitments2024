@@ -77,7 +77,7 @@ const AboutUs = (props: Props) => {
       .to(titleAboutRef.current, {y: 0, opacity: 1, duration: 0.3, ease: "power2.out"})
       
       // 2. Then animate the "VINNOVATEIT" title - reduced from 0.4 to 0.3
-      .to(titleVinnovateRef.current, {y: 0, opacity: 1, duration: 0.3, ease: "power2.out"}, "-=0.4")
+      .to(titleVinnovateRef.current, {y: 0, opacity: 1, duration: 0.3, ease: "power2.out"})
       
       // 3. Horizontal unfurling animation - reduced from 2.2 to 1.6
       .to(imageRef.current, {
@@ -155,18 +155,18 @@ const AboutUs = (props: Props) => {
       ref={sectionRef}
       className="flex h-screen w-full flex-col items-center justify-center font-Fixture "
     >
-      <div className="block h-[10vh] w-full bg-blue-300 md:mt-10"/>
+      <div className="hidden md:block h-0 md:h-[10vh] w-full bg-transparent md:mt-10"/>
       <div className="relative">
         <div className="ml-9 max-w-[80vw] pt-3 md:pl-8 md:pt-10 md:mt-[3.5rem] ">
           <div 
             ref={titleAboutRef}
-            className="font-outline-2 text-6xl font-bold text-specpurple md:text-7xl"
+            className="font-outline-2 text-4xl md:text-6xl lg:text-7xl font-bold text-specpurple"
           >
             ABOUT
           </div>
           <div 
             ref={titleVinnovateRef}
-            className="mr-2 pt-3 text-5xl font-bold text-white md:text-7xl"
+            className="mr-2 pt-3 text-4xl md:text-6xl lg:text-7xl font-bold text-white"
           >
             VINNOVATEIT
           </div>

@@ -164,7 +164,7 @@ const DomainPage = ({
   const content = domainContent[domain as Domain];
 
   return (
-    <>
+    <div className="cursor-none">
       <div className="font-Fixture absolute top-0 left-0">
         <svg
           className="w-16 md:w-32 lg:w-40 ml-[-1.2vw]"
@@ -198,7 +198,7 @@ const DomainPage = ({
       </div>
 
       <div className="font-Fixture flex justify-center items-center min-h-screen bg-specpurple">
-        <div className="w-full max-w-4xl relative px-6">
+        <div className="w-full max-w-4xl relative px-6 cursor-none">
           <div className="mt-[20vh] space-y-8">
             <div className="text-center space-y-4">
               <h1 className="text-white text-5xl md:text-7xl font-bold uppercase">
@@ -209,7 +209,7 @@ const DomainPage = ({
               </p>
             </div>
 
-            <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-8 cursor-none" onSubmit={(e) => e.preventDefault()}>
               {content.questions.map((question, index) => (
                 <div key={index} className="space-y-4">
                   <label className="text-white text-sm md:text-base lg:text-lg block text-justify">
@@ -255,7 +255,7 @@ const DomainPage = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
