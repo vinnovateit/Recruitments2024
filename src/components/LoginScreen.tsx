@@ -63,7 +63,7 @@ const LoginScreen = () => {
         </motion.div>
 
         <motion.div 
-          className="bg-white/10 backdrop-blur-lg rounded-xl p-6 w-full max-w-md relative border border-white/20 shadow-2xl"
+          className="bg-white/10 backdrop-blur-lg rounded-xl p-6 w-full md:w-3/5 lg:w-70vw max-w-4xl relative border border-white/20 shadow-2xl mx-auto"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -93,8 +93,21 @@ const LoginScreen = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <h2 className="text-white text-xl font-semibold mb-4 text-center">Guidelines</h2>
-            <motion.ul className="text-white/90 space-y-2 mb-4 text-sm">
+              <motion.div
+              className="bg-lime-500/10 rounded-lg p-4 border border-lime-500/30 my-4"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 1.1 }}
+              whileHover={{ backgroundColor: "rgba(132, 204, 22, 0.15)" }}
+            >
+              <p className="text-lime-200 text-sm font-medium text-center">
+                <span className="text-lime-400 font-bold">📋 Please Note:</span> Read all guidelines carefully before filling out the application form. Your understanding of these principles will reflect in your application process.
+              </p>
+            </motion.div>
+            <h2 className="text-white text-2xl font-semibold mb-4 text-center"><u>Guidelines</u></h2>
+          
+          </motion.div>
+            <motion.ul className="text-white/90 space-y-2 mb-4 text-sm list-none">
               {[
                 "Perfect for freshers and sophomores looking to kickstart their innovation journey",
                 "Open to all branches - because great ideas know no boundaries",
@@ -109,12 +122,13 @@ const LoginScreen = () => {
                   transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
                   whileHover={{ x: 10 }}
                 >
-                  <span className="text-lime-400 text-lg">•</span>
-                  <span>{text}</span>
+                  
+                  <span><span className="text-lime-400 text-lg">• </span>{text}</span>
                 </motion.li>
               ))}
             </motion.ul>
-          </motion.div>
+            
+            
           
           <motion.p 
             className="text-white/90 text-center font-bold text-sm"
@@ -126,6 +140,25 @@ const LoginScreen = () => {
             <span className="text-lime-400"> VinnovateIT family </span>
             - where innovation never sleeps!
           </motion.p>
+
+          <motion.div
+            className="mt-6 pt-4 border-t border-white/20"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1.4 }}
+          >
+            <div className="bg-yellow-500/10 rounded-lg p-3 mb-3">
+              <p className="text-yellow-200 text-sm font-medium">
+                <span className="text-yellow-400">⚠️ Important:</span> You can only fill this form once. Make sure all information is accurate before submitting.
+              </p>
+            </div>
+            
+            <div className="bg-purple-500/10 rounded-lg p-3">
+              <p className="text-purple-200 text-sm font-medium">
+                <span className="text-purple-300">🔍 Insider tip:</span> Explore the website to discover hidden surprises that could help you in future interviews! The curious ones always find the treasures.
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </div>
