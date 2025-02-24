@@ -1,214 +1,115 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { AiFillInstagram } from "react-icons/ai";
+import { FaFacebook, FaXTwitter, FaLinkedin, FaGithub } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
+
 import illustration1 from "public/assets/x36.png";
 import illustration2 from "public/assets/x34.png";
 import illustration3 from "public/assets/Group 414.png";
-import { AiFillInstagram } from "react-icons/ai";
-import { FaFacebook, FaGithub } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaLinkedin } from "react-icons/fa";
-import CustomCursor from "~/components/CursorAnimation";
-import gsap from 'gsap';
-
-const translations = [
-  { language: 'English', text: 'THANK YOU' },
-  { language: 'Hindi', text: 'धन्यवाद' },
-  { language: 'Tamil', text: 'நன்றி' },
-  { language: 'Telugu', text: 'ధన్యవాదాలు' },
-  { language: 'Malayalam', text: 'നന്ദി' },
-  { language: 'French', text: 'MERCI' },
-  { language: 'Spanish', text: 'GRACIAS' },
-  { language: 'Japanese', text: 'ありがとう' }
-];
+import CustomCursor3 from "~/components/CursorAnimation3";
+import ThankYou from "~/components/ThankYou";
 
 const Page: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
-  const [translationsStarted, setTranslationsStarted] = useState(false);
-  
-  const leftImageRef = useRef(null);
-  const rightImageRef = useRef(null);
-  const textRef = useRef(null);
-  const socialsRef = useRef(null);
-  const buttonRef = useRef(null);
-
-  // Initial animations
-  useEffect(() => {
-    // Reset initial positions
-    gsap.set(leftImageRef.current, { x: '-100%' });
-    gsap.set(rightImageRef.current, { x: '100%' });
-    gsap.set(textRef.current, { opacity: 0, y: 50 });
-    gsap.set(socialsRef.current, { opacity: 0, y: 20 });
-    gsap.set(buttonRef.current, { opacity: 0, y: 20 });
-
-    // Animate elements in sequence
-    const tl = gsap.timeline();
-    tl.to(leftImageRef.current, {
-      x: 0,
-      duration: 1,
-      ease: "power3.out"
-    })
-    .to(rightImageRef.current, {
-      x: 0,
-      duration: 1,
-      ease: "power3.out"
-    }, "-=0.8")
-    .to(textRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: "power2.out"
-    })
-    .to([socialsRef.current, buttonRef.current], {
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      stagger: 0.2,
-      ease: "power2.out"
-    });
-  }, []);
-
-  // Handle text click to start translations
-  const handleTextClick = () => {
-    if (!translationsStarted) {
-      setTranslationsStarted(true);
-      
-      // Start the translation animations
-      const interval = setInterval(() => {
-        setIsAnimating(true);
-        setTimeout(() => {
-          setCurrentIndex((prev) => (prev + 1) % translations.length);
-          setIsAnimating(false);
-        }, 500);
-      }, 2000);
-
-      return () => clearInterval(interval);
-    }
-  };
+  const [isHovered, setIsHovered] = useState(false);
+  const router = useRouter();
 
   return (
-    <section className="pb-10 md:pb-8 min-h-screen relative min-w-full bg-[#1E003E] text-white cursor-none overflow-hidden">
-      <CustomCursor/>
-      <div className='absolute top-0 right-0 cursor-none'>
-        <Image
-          src={illustration3}
-          alt="background"
-          className='relative top-0 md:h-16 md:w-16 lg:h-20 lg:w-20 xl:h-24 xl:w-24 h-9 w-9'
-        />
-      </div>
-      
-      {/* Left Image */}
-      <div 
-        ref={leftImageRef}
-        className="absolute left-0 top-1/2 -translate-y-1/2 hidden sm:block"
-      >
-        <Image
-          src={illustration2}
-          alt="illustration"
-          style={{ objectFit: "cover" }}
-          className="h-[14rem] w-[12rem] md:h-[16rem] md:w-[14.4rem]"
-        />
-      </div>
-
-      {/* Right Image */}
-      <div 
-        ref={rightImageRef}
-        className="absolute right-0 top-1/2 -translate-y-1/2 hidden sm:block"
-      >
-        <Image
-          src={illustration1}
-          alt="illustration"
-          style={{ objectFit: "cover" }}
-          className="h-[14rem] w-[12rem] md:h-[16rem] md:w-[14.4rem]"
-        />
-      </div>
-
-      {/* Centered Content */}
-      <div className="flex flex-col items-center justify-center min-h-screen px-4">
-        <div 
-          ref={textRef}
-          onClick={handleTextClick}
-          className="text-center font-Fixture tracking-wider text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-9xl mb-8 sm:mb-0 select-none"
+    <section className="relative flex items-center justify-center min-h-screen min-w-full bg-[#1E003E] text-white overflow-hidden">
+      <CustomCursor3 color={isHovered ? "#F472B6" : "#C1FF44"} />
+      <div className="absolute top-0 left-0">
+        <svg
+          className="w-16 md:w-32 lg:w-40 ml-[-1.2vw]"
+          viewBox="0 0 129 95"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <div className={`transition-opacity duration-500 ${isAnimating ? 'opacity-0' : 'opacity-100'}`}>
-            {!translationsStarted ? (
-              <><span className="gradient-text2">TH</span>ANK <span className="gradient-text">YOU</span></>
-            ) : (
-              <span className="gradient-text">{translations[currentIndex].text}</span>
-            )}
-          </div>
+          <g filter="url(#filter0_d_56_3802)">
+            <path
+              d="M3.94072 3.27278C3.94072 3.27278 -7.6574 33.1742 7.87169 43.32C23.4008 53.4659 27.0135 18.6703 42.7494 27.7032C56.6596 35.688 36.1137 52.3997 54.2856 62.1731C72.4575 71.9464 83.7558 50.5554 83.7558 50.5554C83.7558 50.5554 88.4395 38.1416 74.4525 39.7015C60.4654 41.2614 57.6788 54.8699 78.6939 66.248C99.709 77.6261 108.971 62.9123 108.971 62.9123"
+              stroke="white"
+              strokeWidth="30"
+              strokeLinecap="round"
+            />
+            <path
+              d="M3.94072 3.27278C3.94072 3.27278 -7.6574 33.1742 7.87169 43.32C23.4008 53.4659 27.0135 18.6703 42.7494 27.7032C56.6596 35.688 36.1137 52.3997 54.2856 62.1731C72.4575 71.9464 83.7558 50.5554 83.7558 50.5554C83.7558 50.5554 88.4395 38.1416 74.4525 39.7015C60.4654 41.2614 57.6788 54.8699 78.6939 66.248C99.709 77.6261 108.971 62.9123 108.971 62.9123"
+              stroke="#F94AC9"
+              strokeWidth="15"
+              strokeLinecap="round"
+            />
+          </g>
+        </svg>
+      </div>
+
+      <div className="absolute top-0 right-0">
+        <img 
+          src="/thundericon.png" 
+          alt="Thunder Icon" 
+          className="w-20 md:w-32"
+        />
+      </div>
+      <div className="font-Fixture pt-20">
+        {/* Top Right Illustration */}
+        <div className="hidden md:block absolute top-0 left-3 pt-6 md:pt-24">
+          <Image src={illustration2} alt="illustration" className="h-32 w-32 lg:h-40 lg:w-40" />
         </div>
 
-        <div 
-          ref={socialsRef}
-          className="mt-10"
-        >
-          <ul className="flex gap-6 md:gap-8 lg:gap-10 cursor-none">
+        <div className="md:mt-8 lg:mt-12 flex justify-center">
+          <ThankYou setIsHovered={setIsHovered} />
+        </div>
+
+        {/* Bottom Left Illustration */}
+        <div className="hidden md:block absolute bottom-0 right-0 m-6">
+          <Image src={illustration1} alt="illustration" className="h-32 w-32 lg:h-40 lg:w-40" />
+        </div>
+
+        {/* Social Media Links */}
+        <div className="flex justify-center pt-10 md:pt-11">
+          <ul className="flex gap-10 md:gap-4 lg:gap-6">
             <li>
-              <Link
-                href="https://www.instagram.com/vinnovateit/"
+              <a
+                href="https://www.instagram.com/vinnovateit/?utm_source=ig_web_button_share_sheet"
                 target="_blank"
                 className="group"
               >
-                <AiFillInstagram className="h-6 w-6 sm:h-8 sm:w-8 lg:h-12 lg:w-12 transition-all duration-300 text-white group-hover:text-pink-500" />
-              </Link>
+                <AiFillInstagram className="h-8 w-8 md:h-9 md:w-9 lg:h-12 lg:w-12 transition-all duration-300 text-white group-hover:text-pink-500" />
+              </a>
             </li>
             <li>
-              <Link href="https://www.facebook.com/VinnovateIT/" target="_blank" className="group">
-                <FaFacebook className="h-6 w-6 sm:h-7 sm:w-7 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-500" />
-              </Link>
+              <a href="https://www.facebook.com/VinnovateIT/" target="_blank" className="group">
+                <FaFacebook className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-500" />
+              </a>
             </li>
             <li>
-              <Link href="https://x.com/v_innovate_it" target="_blank" className="group">
-                <FaXTwitter className="h-6 w-6 sm:h-7 sm:w-7 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-black" />
-              </Link>
+              <a href="https://x.com/v_innovate_it" target="_blank" className="group">
+                <FaXTwitter className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-black" />
+              </a>
             </li>
             <li>
-              <Link
-                href="https://www.linkedin.com/company/v-innovate-it/"
-                target="_blank"
-                className="group"
-              >
-                <FaLinkedin className="h-6 w-6 sm:h-7 sm:w-7 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-500" />
-              </Link>
+              <a href="https://www.linkedin.com/company/v-innovate-it/" target="_blank" className="group">
+                <FaLinkedin className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-500" />
+              </a>
             </li>
             <li>
-              <Link href="https://github.com/vinnovateit" target="_blank" className="group">
-                <FaGithub className="h-6 w-6 sm:h-7 sm:w-7 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-800" />
-              </Link>
+              <a href="https://github.com/vinnovateit" target="_blank" className="group">
+                <FaGithub className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-800" />
+              </a>
             </li>
           </ul>
         </div>
 
-        <div 
-          ref={buttonRef}
-          className="mt-10"
-        >
-          <Link href="/">
-            <button className="px-4 py-2 sm:px-6 sm:py-3 text-base sm:text-lg font-semibold text-white bg-purple-600 rounded-lg shadow-lg hover:bg-purple-700 transition pointer-events-none">
-              Go Back to Home
-            </button>
-          </Link>
+        {/* Go Back Button */}
+        <div className="flex justify-center pt-8">
+          <button
+            onClick={() => router.push("/")}
+            className="bg-[#9FFF47] text-[#1E003E] px-6 py-3 rounded-full text-lg font-semibold transition duration-300 hover:bg-[#7ED321]"
+          >
+            Go Back
+          </button>
         </div>
       </div>
-
-      <style>{`
-        .gradient-text {
-          background-image: linear-gradient(to bottom right, #BC18CF 58%, #ffffff 50%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-        .gradient-text2 {
-          background-image: linear-gradient(to top right, #BC18CF 56%, #ffffff 50%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-      `}</style>
     </section>
   );
 };
