@@ -65,11 +65,13 @@ const ThankYou: React.FC<AnimatedThankYouProps> = ({ setIsHovered }) => {
   });
 
   return (
-    <motion.div
-      className="flex justify-center items-center px-12 py-3 md:py-20 text-center rounded-lg shadow-lg relative opacity-40 w-auto max-w-[80vw]"
+     <motion.div
+      className="flex justify-center items-center px-12 py-3 md:py-20 text-center rounded-lg shadow-lg relative w-auto max-w-[80vw]"
       animate={{
         backgroundColor:
-          currentIndex % 2 === 0 ? "rgb(163 230 53)" : "rgb(244 114 182)",
+          currentIndex % 2 === 0 
+          ? "rgba(163, 230, 53, 0.4)"   // 40% opacity background
+          : "rgba(244, 114, 182, 0.4)", // 40% opacity background
       }}
       transition={{
         duration: ANIMATION_DURATION,
@@ -84,15 +86,14 @@ const ThankYou: React.FC<AnimatedThankYouProps> = ({ setIsHovered }) => {
         setIsHovered(false);
       }}
       style={{
-        
         margin: "0 auto",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "200px", // Adjust height as needed
+        height: "200px",
       }}
     >
-      <div className="relative h-24 md:h-32 w-[70vw] md:w-[50vw] flex items-center justify-center">
+      <div className="relative h-24 md:h-32 w-[70vw] md:w-[50vw] flex items-center justify-center opacity-100">
         <AnimatePresence mode="wait">
           <motion.h1
             key={currentIndex}
@@ -108,7 +109,7 @@ const ThankYou: React.FC<AnimatedThankYouProps> = ({ setIsHovered }) => {
             )}`}
             style={{
               ...getGradientStyle(currentIndex % 2 === 1),
-              opacity: 1, // Ensures text always stays fully visible
+              opacity: 1 // Force full opacity for text
             }}
           >
             {messages[currentIndex].text}

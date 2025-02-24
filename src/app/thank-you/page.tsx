@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import Image from "next/image";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaFacebook, FaXTwitter, FaLinkedin, FaGithub } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
+import gsap from "gsap";
 
 import illustration1 from "public/assets/x36.png";
 import illustration2 from "public/assets/x34.png";
@@ -15,6 +16,28 @@ import ThankYou from "~/components/ThankYou";
 const Page: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
   const router = useRouter();
+
+  // Create refs for the illustrations
+  const illustration1Ref = useRef(null);
+  const illustration2Ref = useRef(null);
+
+ useLayoutEffect(() => {
+  if (typeof window !== "undefined") {
+    gsap.from(illustration1Ref.current, {
+      x: 300,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+    });
+
+    gsap.from(illustration2Ref.current, {
+      x: -300,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+    });
+  }
+}, []);
 
   return (
     <section className="relative flex items-center justify-center min-h-screen min-w-full bg-[#1E003E] text-white overflow-hidden">
@@ -51,18 +74,30 @@ const Page: React.FC = () => {
         />
       </div>
       <div className="font-Fixture pt-20">
-        {/* Top Right Illustration */}
-        <div className="hidden md:block absolute top-0 left-3 pt-6 md:pt-24">
-          <Image src={illustration2} alt="illustration" className="h-32 w-32 lg:h-40 lg:w-40" />
+        {/* Top Left Illustration animated from left */}
+        <div
+          className="opacity-0 md:opacity-100 absolute top-0 left-3 pt-6 md:pt-24"
+        >
+          <Image
+            src={illustration2}
+            alt="illustration"
+            className="h-32 w-32 lg:h-40 lg:w-40"
+          />
         </div>
 
         <div className="md:mt-8 lg:mt-12 flex justify-center">
           <ThankYou setIsHovered={setIsHovered} />
         </div>
 
-        {/* Bottom Left Illustration */}
-        <div className="hidden md:block absolute bottom-0 right-0 m-6">
-          <Image src={illustration1} alt="illustration" className="h-32 w-32 lg:h-40 lg:w-40" />
+        {/* Bottom Right Illustration animated from right */}
+        <div
+          className="opacity-0 md:opacity-100 absolute bottom-0 right-0 m-6"
+        >
+          <Image
+            src={illustration1}
+            alt="illustration"
+            className="h-32 w-32 lg:h-40 lg:w-40"
+          />
         </div>
 
         {/* Social Media Links */}
@@ -78,22 +113,38 @@ const Page: React.FC = () => {
               </a>
             </li>
             <li>
-              <a href="https://www.facebook.com/VinnovateIT/" target="_blank" className="group">
+              <a
+                href="https://www.facebook.com/VinnovateIT/"
+                target="_blank"
+                className="group"
+              >
                 <FaFacebook className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-500" />
               </a>
             </li>
             <li>
-              <a href="https://x.com/v_innovate_it" target="_blank" className="group">
+              <a
+                href="https://x.com/v_innovate_it"
+                target="_blank"
+                className="group"
+              >
                 <FaXTwitter className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-black" />
               </a>
             </li>
             <li>
-              <a href="https://www.linkedin.com/company/v-innovate-it/" target="_blank" className="group">
+              <a
+                href="https://www.linkedin.com/company/v-innovate-it/"
+                target="_blank"
+                className="group"
+              >
                 <FaLinkedin className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-500" />
               </a>
             </li>
             <li>
-              <a href="https://github.com/vinnovateit" target="_blank" className="group">
+              <a
+                href="https://github.com/vinnovateit"
+                target="_blank"
+                className="group"
+              >
                 <FaGithub className="h-7 w-7 md:h-8 md:w-8 lg:h-11 lg:w-11 transition-all duration-300 group-hover:text-blue-800" />
               </a>
             </li>
@@ -104,7 +155,7 @@ const Page: React.FC = () => {
         <div className="flex justify-center pt-8">
           <button
             onClick={() => router.push("/")}
-            className="bg-[#9FFF47] text-[#1E003E] px-6 py-3 rounded-full text-lg font-semibold transition duration-300 hover:bg-[#7ED321]"
+            className="bg-pink-500 text-white hover:text-black px-6 py-3 text-lg font-semibold transition duration-300 hover:bg-[#9FFF47]"
           >
             Go Back
           </button>

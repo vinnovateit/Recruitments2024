@@ -152,6 +152,13 @@ const JoinOurCommunity: React.FC = () => {
 
   return (
     <section className="pb-10 md:pb-8 absolute min-w-full bg-[#1E003E] text-white max-w-screen-lg overflow-hidden cursor-none">
+      <div className="absolute left-0">
+              <img
+                src="/thundericon.png"
+                alt="Thunder Icon"
+                className="w-20 md:w-32"
+              />
+            </div>
       <div className='absolute top-0 right-0 overflow-hidden pointer-events-none'>
         <Image
           src={illustration3}
@@ -165,7 +172,7 @@ const JoinOurCommunity: React.FC = () => {
     <Image
       src={illustration2}
       alt="illustration"
-      className="h-[8rem] w-[7rem] sm:h-[13rem] sm:w-[12rem] md:h-[16rem] md:w-[14.4rem] left-0"
+      className="h-[16rem] w-[14.4rem] left-0"
     />
   </div>
 
@@ -187,7 +194,7 @@ const JoinOurCommunity: React.FC = () => {
     <Image
       src={illustration1}
       alt="illustration" 
-      className="h-[8rem] w-[7rem] sm:h-[13rem] sm:w-[12rem] md:h-[16rem] md:w-[14.4rem] right-0"
+      className="h-[16rem] w-[14.4rem] right-0"
     />
   </div>
 </div>
