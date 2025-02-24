@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef} from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import LoginScreen from "~/components/LoginScreen";
-import { Send, AlertCircle } from "lucide-react";
 import Alert from "~/components/Alert";
 
 type Domain = "technical" | "management" | "design";
@@ -21,21 +21,17 @@ const DomainPage = ({
 }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
   const [selectedDomains, setSelectedDomains] = useState<Domain[]>([]);
   const [currentDomainIndex, setCurrentDomainIndex] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
     answers: ['', '', ''],
     files: []
   });
+  const [showAirplane, setShowAirplane] = useState(false);
+  const controls = useAnimation();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showError, setShowError] = useState(false);
-  const [paperPlaneStyle, setPaperPlaneStyle] = useState({
-    position: 'static',
-    transform: 'translate(0, 0) rotate(0deg)',
-    opacity: 1,
-    color: '#39FF14',
-  });
-  const [buttonText, setButtonText] = useState("SUBMIT");
+  const [showError, setShowError] = useState(false)
   
   const whiteList: Domain[] = ["technical", "management", "design"];
 
@@ -92,7 +88,6 @@ const DomainPage = ({
 
  const handleSubmit = async () => {
     setIsSubmitting(true);
-    setButtonText("SUBMITTED");
     try {
       localStorage.setItem(`formData_${domain}`, JSON.stringify(formData));
 
@@ -129,31 +124,23 @@ const DomainPage = ({
       localStorage.removeItem('formData');
 
       // Animate paper plane
-      setPaperPlaneStyle({
-        position: 'fixed',
-        transform: 'translate(calc(100vw - 100px), calc(-100vh + 100px)) rotate(45deg)',
-        opacity: 0,
-        transition: 'all 1s ease-in-out',
-        color: '#39FF14',
-        filter: 'drop-shadow(0 0 8px #39FF14)'
-      });
+     setShowAirplane(true);
+        await controls.start({
+          x: "-50vw",
+          y: "-50vh",
+          scale: 0.5,
+          transition: {
+            duration: 1.5,
+            ease: [0.34, 1.56, 0.64, 1],
+          }
+        });
 
-      // Wait for animation to complete before redirecting
-      setTimeout(() => {
         router.push("/thank-you");
-      }, 1000);
+      }
 
-    } catch (error) {
+      catch (error) {
       console.error("Error submitting form:", error);
       setShowError(true);
-      setButtonText("SUBMIT");
-      setPaperPlaneStyle({
-        position: 'static',
-        transform: 'translate(0, 0) rotate(0deg)',
-        opacity: 1,
-        color: '#39FF14',
-        filter: 'drop-shadow(0 0 8px #39FF14)'
-      });
       setTimeout(() => {
         router.push("/");
       }, 3000);
@@ -194,6 +181,16 @@ const DomainPage = ({
     }
   } as const;
 
+  const getInitialPosition = () => {
+    if (submitButtonRef.current) {
+      const rect = submitButtonRef.current.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2 - 12, // 12 = half of SVG size
+        y: rect.top + rect.height / 2 - 12
+      };
+    }
+    return { x: 0, y: 0 };
+  };
   const content = domainContent[domain as Domain];
 
   return (
@@ -272,7 +269,7 @@ const DomainPage = ({
             <div className="flex justify-center gap-4 mt-12">
         <button
           onClick={() => handleNavigation('back')}
-          className="bg-gray-500 text-white px-10 py-3 rounded text-lg font-medium hover:bg-gray-600 transition-colors"
+          className="bg-purple-500 text-white px-10 py-3 rounded text-lg font-medium hover:bg-pink-700 transition-colors"
           disabled={isSubmitting}
         >
           ← BACK
@@ -281,23 +278,33 @@ const DomainPage = ({
         {currentDomainIndex < selectedDomains.length - 1 ? (
           <button
             onClick={() => handleNavigation('next')}
-            className="bg-pink-500 text-white px-10 py-3 rounded text-lg font-medium hover:bg-pink-600 transition-colors"
+            className="bg-pink-500 text-white px-10 py-3 rounded text-lg font-medium hover:bg-lime-400 hover:text-black transition-colors"
             disabled={isSubmitting}
           >
             NEXT →
           </button>
         ) : (
-          <button
-            onClick={handleSubmit}
-            disabled={isSubmitting}
-            className="bg-pink-500 text-white px-10 py-3 rounded text-lg font-medium hover:bg-pink-600 transition-colors flex items-center gap-2 relative overflow-visible"
-          >
-            <span>{buttonText}</span>
-            <Send 
-              className="w-5 h-5" 
-              style={paperPlaneStyle}
-            />
-          </button>
+
+      <button
+        ref={submitButtonRef}
+        onClick={handleSubmit}
+        disabled={isSubmitting}
+        className="bg-pink-500 text-white px-10 py-3 rounded text-lg font-medium hover:bg-lime-400 hover:text-black transition-colors flex items-center gap-2"
+      >
+        SUBMIT
+        <svg 
+          className="w-6 h-6"
+          viewBox="0 0 24 24" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path 
+            d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" 
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+          
         )}
       </div>
         </div>

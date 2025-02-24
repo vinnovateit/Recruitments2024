@@ -173,7 +173,7 @@ const AboutUs = (props: Props) => {
         <div>
           <p 
             ref={paragraphRef}
-            className="text-mono ml-10 mr-10 mt-8 text-center text-sm font-bold text-white md:ml-60 md:mr-60 md:text-lg"
+            className="text-mono ml-10 mr-10  mt-8 text-center text-sm font-bold text-white lg:ml-60 lg:mr-60 md:text-lg"
           >
             {
               "VinnovateIT is the official innovation and incubation lab of SITE School, VIT Vellore. To put it simply....we are the answer to the question 'What if Elon Musk and Albert Einstein had a brain child?' We aim to be the one stop destination for all you curious cats and satisfy your hunger in the diverse world of computer science."

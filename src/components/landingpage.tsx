@@ -86,9 +86,9 @@ export const Landingpage = () => {
       </svg>
 
       {/* Main content container */}
-      <div className="max-w-screen w-full min-h-screen flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-24">
+      <div className="max-w-screen w-full top-20 flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-24">
         {/* LEFT TEXT SECTION */}
-        <div className="text-center md:text-left md:w-1/2 pt-16 md:pt-0">
+        <div className="text-center md:text-left md:w-1/2 w-full pt-20 md:pt-0 mt-[9vh] md:mt-[18vh]">
           <h1 ref={titleRef} className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#FF5ACD]">
             VINNOVATEIT
           </h1>

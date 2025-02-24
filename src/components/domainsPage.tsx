@@ -185,7 +185,7 @@ const DomainsPage: React.FC = () => {
               <img
                 src="/managementcard.png"
                 alt="Management"
-                className="w-full max-w-[200px] lg:max-w-[320px] hover:scale-105"
+                className="w-full max-w-[200px] md:max-w-[320px] hover:scale-105"
               />
             </div>
 
@@ -196,7 +196,7 @@ const DomainsPage: React.FC = () => {
               <img
                 src="/techcard.png"
                 alt="Technical"
-                className="w-full max-w-[200px] lg:max-w-[320px] hover:scale-105"
+                className="w-full max-w-[200px] md:max-w-[320px] hover:scale-105"
               />
             </div>
 
@@ -207,7 +207,7 @@ const DomainsPage: React.FC = () => {
               <img
                 src="/designcard.png"
                 alt="Design"
-                className="w-full max-w-[200px] lg:max-w-[320px] hover:scale-105"
+                className="w-full max-w-[200px] md:max-w-[320px] hover:scale-105"
               />
             </div>
           </div>

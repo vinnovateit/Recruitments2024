@@ -152,6 +152,13 @@ const JoinOurCommunity: React.FC = () => {
 
   return (
     <section className="pb-10 md:pb-8 absolute min-w-full bg-[#1E003E] text-white max-w-screen-lg overflow-hidden cursor-none">
+      <div className="absolute left-0">
+              <img
+                src="/thundericon.png"
+                alt="Thunder Icon"
+                className="w-20 md:w-32"
+              />
+            </div>
       <div className='absolute top-0 right-0 overflow-hidden pointer-events-none'>
         <Image
           src={illustration3}
@@ -159,52 +166,40 @@ const JoinOurCommunity: React.FC = () => {
           className='relative top-0 md:h-20 md:w-20 lg:h-24 lg:w-24 h-16 w-16'
         />
       </div>
-      <div className="mt-12 sm:mt-24 flex justify-between">
-        <div ref={leftImageRef}>
-          <Image
-            src={illustration2}
-            alt="illustration"
-            style={{ objectFit: "cover" }}
-            className="relative mt-[5vh] top-[30%] h-[13rem] w-[12rem] md:h-[16rem] md:w-[14.4rem]"
-          />
-        </div>
+      <div className="pt-12 mt-12 sm:mt-24 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+  {/* Left Image */}
+  <div ref={leftImageRef} className="hidden lg:block order-1 sm:order-1 absolute left-0">
+    <Image
+      src={illustration2}
+      alt="illustration"
+      className="h-[16rem] w-[14.4rem] left-0"
+    />
+  </div>
 
-        <div className="hidden text-center font-Fixture tracking-wider sm:flex sm:flex-col sm:pt-14 sm:text-5xl md:pt-16 md:text-5xl lg:pt-16 lg:text-7xl xl:pt-14 xl:text-9xl">
-          <div className="relative">
-            JOI<span ref={nInJoinDesktopRef} className="inline-block rotating-letter">N</span> <span className="text-[#BC18CF]">OU<span ref={iInCommunityDesktopRef} className="inline-block rotating-letter">R</span></span>
-          </div>
-          <div>
-            <span className="gradient-text2"> CO</span>MM<span ref={rInOurDesktopRef} className="inline-block rotating-letter">U</span>
-            <span className="gradient-text">NI</span>TY
-          </div>
-        </div>
+  {/* Text Content - Always centered */}
+  <div className="order-2 sm:order-2 text-center font-Fixture tracking-wider 
+      text-4xl md:text-8xl">
+    <div className="relative">
+      JOI<span ref={nInJoinDesktopRef} className="inline-block rotating-letter">N</span>{' '}
+      <span className="text-[#BC18CF]">OU<span ref={iInCommunityDesktopRef} className="inline-block rotating-letter">R</span></span>
+    </div>
+    <div>
+      <span className="gradient-text2"> CO</span>MM<span ref={rInOurDesktopRef} className="inline-block rotating-letter">U</span>
+      <span className="gradient-text">NI</span>TY
+    </div>
+  </div>
 
-        <div ref={rightImageRef}>
-          <Image
-            src={illustration1}
-            alt="illustration"
-            style={{ objectFit: "cover" }}
-            className="relative mt-[5vh] top-[30%] h-[13rem] w-[12rem] md:h-[16rem] md:w-[14.4rem]]"
-          />
-        </div>
-      </div>
+  {/* Right Image */}
+  <div ref={rightImageRef} className="hidden lg:block order-3 sm:order-3 absolute right-0">
+    <Image
+      src={illustration1}
+      alt="illustration" 
+      className="h-[16rem] w-[14.4rem] right-0"
+    />
+  </div>
+</div>
 
-      {/* Rest of the component remains the same */}
-      <div className="flex flex-col items-center pt-6 font-Fixture text-5xl leading-[3rem] sm:hidden">
-        <div>
-          <h1>
-            JOI<span ref={nInJoinMobileRef} className="inline-block rotating-letter">N</span> <span className="text-[#BC18CF]"> OU<span ref={iInCommunityMobileRef} className="inline-block rotating-letter">R</span></span>
-          </h1>
-        </div>
-        <div>
-          <h1>
-            <span className="gradient-text2"> CO</span>MM<span ref={rInOurMobileRef} className="inline-block rotating-letter">R</span>
-            <span className="gradient-text">NI</span>TY
-          </h1>
-        </div>
-      </div>
-
-      <div className="flex justify-center pt-7 md:pt-11">
+      <div className="flex justify-center pt-10 md:pt-11">
         <ul className="flex gap-10 md:gap-4 lg:gap-6">
           <li>
             <a
