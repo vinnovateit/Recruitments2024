@@ -10,6 +10,32 @@ import AlreadySubmitted from "~/components/AlreadySubmitted";
 
 type Domain = "technical" | "management" | "design";
 
+interface BaseQuestion {
+  text: string;
+  mandatory: boolean;
+  type: "text" | "mcq";
+  showIf?: {
+    question: string;
+    answer: string;
+  };
+}
+
+interface TextQuestion extends BaseQuestion {
+  type: "text";
+}
+
+interface MCQQuestion extends BaseQuestion {
+  type: "mcq";
+  options: string[];
+}
+
+type Question = TextQuestion | MCQQuestion;
+
+interface DomainContent {
+  description: string;
+  questions: Question[];
+}
+
 interface FormData {
   answers: string[];
   files: File[];
@@ -27,41 +53,82 @@ interface SubmitResult {
   error?: string;
 }
 
-const domainContent = {
+const domainContent: Record<Domain, DomainContent> = {
   technical: {
     description:
       "Share your technical expertise and problem-solving skills through these challenges. We're looking for innovative thinkers who can tackle complex problems.",
     questions: [
-      { text: "Github id", mandatory: false },
-      { text: "What is a task from your daily life that you wish to automate?", mandatory: true },
-      { text: "What are your two favorite technical domains, and how would you combine them to create a useful product? (Example: If you like AI and healthcare, you could create an app that analyzes symptoms and predicts potential illnesses. If you like drones and agriculture, you could design a drone system that monitors crop health using computer vision.)", mandatory: true },
-      { text: "You are developing an app that lets users send an emergency alert to contacts even if their phone is locked or out of battery. How would you implement this?(Hint: Think about alternative ways to trigger an alert)", mandatory: false },
-      { text: "An artist complains that AI-generated images mimic their work too closely. How would you prevent AI models from infringing on intellectual property rights?", mandatory: true },
-      { text: "A hacker has found a way to use computer cooling fans to send secret messages by varying their speed over air gapped systems. How would you detect and mitigate this?", mandatory: true },
-      { text: "A recommendation system you built is causing a 'filter bubble' where users are only exposed to a narrow range of content. How would you address this while maintaining personalization?", mandatory: true },
-      { text: "You need to implement a search engine that works efficiently with just 1MB of RAM. How would you approach this problem?(Hint: Traditional search engines use large indexes, but memory is limited here. Could compression, approximate search techniques, or lightweight indexing help?)", mandatory: false },
-      { text: "Did you find the hidden flags? Put them in here", mandatory: false },
+      { text: "Github id", mandatory: false, type: "text" },
+      { text: "What is a task from your daily life that you wish to automate?", mandatory: true, type: "text" },
+      { text: "What are your two favorite technical domains, and how would you combine them to create a useful product? (Example: If you like AI and healthcare, you could create an app that analyzes symptoms and predicts potential illnesses. If you like drones and agriculture, you could design a drone system that monitors crop health using computer vision.)", mandatory: true, type: "text" },
+      { text: "You are developing an app that lets users send an emergency alert to contacts even if their phone is locked or out of battery. How would you implement this?(Hint: Think about alternative ways to trigger an alert)", mandatory: false, type: "text" },
+      { text: "An artist complains that AI-generated images mimic their work too closely. How would you prevent AI models from infringing on intellectual property rights?", mandatory: true, type: "text" },
+      { text: "A hacker has found a way to use computer cooling fans to send secret messages by varying their speed over air gapped systems. How would you detect and mitigate this?", mandatory: true, type: "text" },
+      { text: "A recommendation system you built is causing a 'filter bubble' where users are only exposed to a narrow range of content. How would you address this while maintaining personalization?", mandatory: true, type: "text" },
+      { text: "You need to implement a search engine that works efficiently with just 1MB of RAM. How would you approach this problem?(Hint: Traditional search engines use large indexes, but memory is limited here. Could compression, approximate search techniques, or lightweight indexing help?)", mandatory: false, type: "text" },
+      { text: "Did you find the hidden flags? Put them in here", mandatory: false, type: "text" },
     ],
   },
   management: {
     description:
       "Demonstrate your leadership abilities and project management skills. We're seeking individuals who can drive teams toward success.",
     questions: [
-      { text: "LinkedIn id", mandatory: true },
-      { text: "Do you have prior experience of managing tasks/ teams?", mandatory: true },
-      { text: "You're leading a task that requires cooperation from multiple departments, but some department members are unresponsive and are causing delays. How would you manage this situation to ensure the project moves forward?", mandatory: true },
-      { text: "Suppose we have an event coming up for which we require a target number of registrations. How will you market the event and ensure registrations using methods other than social media marketing?", mandatory: true },
-      { text: "Imagine you're assigned a team who's running behind on deadlines. How will you use your managerial skills and delegate the tasks to bring the team back on track?", mandatory: true },
-      { text: "A rival club launches an application similar to ours, how would you go about convincing people that ours is better, without bad mouthing them?", mandatory: true },
-      { text: "What are your expectations from VinnovateIT?", mandatory: true },
+      { text: "LinkedIn id", mandatory: true, type: "text" },
+      { text: "Do you have prior experience of managing tasks/ teams?", mandatory: true, type: "text" },
+      { text: "You're leading a task that requires cooperation from multiple departments, but some department members are unresponsive and are causing delays. How would you manage this situation to ensure the project moves forward?", mandatory: true, type: "text" },
+      { text: "Suppose we have an event coming up for which we require a target number of registrations. How will you market the event and ensure registrations using methods other than social media marketing?", mandatory: true, type: "text" },
+      { text: "Imagine you're assigned a team who's running behind on deadlines. How will you use your managerial skills and delegate the tasks to bring the team back on track?", mandatory: true, type: "text" },
+      { text: "A rival club launches an application similar to ours, how would you go about convincing people that ours is better, without bad mouthing them?", mandatory: true, type: "text" },
+      { text: "What are your expectations from VinnovateIT?", mandatory: true, type: "text" },
     ],
   },
   design: {
     description:
       "Show us your creative vision and design thinking. We're looking for designers who can blend aesthetics with functionality.",
     questions: [
-      { text: "Do you have any previous experience in design? If yes, specify the time period.", mandatory: true },
-      { text: "Which software you use for designing? [Figma, Canva, illustrator, photoshop]", mandatory: true },
+      { 
+        text: "Do you have any previous experience in design? If yes, specify the time period.", 
+        mandatory: true,
+        type: "text"
+      },
+      { 
+        text: "Which software you use for designing? [Figma, Canva, illustrator, photoshop]", 
+        mandatory: true,
+        type: "text"
+      },
+      { 
+        text: "What domain interests you more?", 
+        mandatory: true,
+        type: "mcq",
+        options: ["Graphic Design", "UI/UX", "Media (Video Editing/Photography/Videography)"]
+      },
+      { 
+        text: "If you could re-design vtop how would you change it and what new features would you add to make it more accessible to students?", 
+        mandatory: false,
+        type: "text",
+        showIf: {
+          question: "What domain interests you more?",
+          answer: "UI/UX"
+        }
+      },
+      { 
+        text: "If you could redesign any famous logo which one would it be and why?", 
+        mandatory: false,
+        type: "text",
+        showIf: {
+          question: "What domain interests you more?",
+          answer: "Graphic Design"
+        }
+      },
+      { 
+        text: "What is your preferred medium for creating visuals—digital, print, or mixed media?", 
+        mandatory: false,
+        type: "text",
+        showIf: {
+          question: "What domain interests you more?",
+          answer: "Graphic Design"
+        }
+      },
     ],
   },
 } as const;
@@ -360,22 +427,50 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
               onSubmit={(e) => e.preventDefault()}
             >
               {content.questions.map((question, index) => (
-                <div key={index} className="space-y-4">
+                <div key={index} className={`space-y-4 ${
+                  question.showIf ? 
+                  formData.answers[2] === question.showIf.answer ? '' : 'hidden' 
+                  : ''
+                }`}>
                   <label className="block text-justify text-sm text-white md:text-base lg:text-lg">
                     {question.text}
                     {question.mandatory && <span className="text-red-500 ml-1">*</span>}
                   </label>
 
                   <div className="relative">
-                    <input
-                      type={index === 1 ? "url" : "text"}
-                      className={`w-full rounded border ${
-                        formData.errors?.[index] ? 'border-red-500' : 'border-purple-800'
-                      } bg-specpurple p-[0.7rem] text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none`}
-                      placeholder={index === 1 ? "Attach URL here..." : "Answer here..."}
-                      value={formData.answers[index]}
-                      onChange={(e) => handleInputChange(index, e.target.value)}
-                    />
+                    {question.type === "mcq" ? (
+                      <div className="space-y-2">
+                        {question.options?.map((option, optionIndex) => (
+                          <div key={optionIndex} className="flex items-center">
+                            <input
+                              type="radio"
+                              id={`${index}-${optionIndex}`}
+                              name={`question-${index}`}
+                              value={option}
+                              checked={formData.answers[index] === option}
+                              onChange={(e) => handleInputChange(index, e.target.value)}
+                              className="mr-2 cursor-pointer"
+                            />
+                            <label
+                              htmlFor={`${index}-${optionIndex}`}
+                              className="cursor-pointer text-white"
+                            >
+                              {option}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        className={`w-full rounded border ${
+                          formData.errors?.[index] ? 'border-red-500' : 'border-purple-800'
+                        } bg-specpurple p-[0.7rem] text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none`}
+                        placeholder="Answer here..."
+                        value={formData.answers[index]}
+                        onChange={(e) => handleInputChange(index, e.target.value)}
+                      />
+                    )}
                     {formData.errors?.[index] && (
                       <span className="text-red-500 text-sm absolute -bottom-6 left-0">
                         {formData.errors[index]}
