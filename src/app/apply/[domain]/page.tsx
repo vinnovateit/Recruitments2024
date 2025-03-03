@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import Image from 'next/image';
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import LoginScreen from "~/components/LoginScreen";
@@ -12,6 +13,17 @@ type Domain = "technical" | "management" | "design";
 interface FormData {
   answers: string[];
   files: File[];
+}
+
+interface BasicInfo {
+  name: string;
+  registrationNumber: string;
+  mobileNumber: string;
+}
+
+interface SubmitResult {
+  success: boolean;
+  error?: string;
 }
 
 const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
@@ -30,7 +42,7 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
   const [hasSubmitted, setHasSubmitted] = useState<boolean | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const whiteList: Domain[] = ["technical", "management", "design"];
+  const whiteList = useMemo<Domain[]>(() => ["technical", "management", "design"], []);
 
   const isValidDomain = domain && whiteList.includes(domain as Domain);
 
@@ -68,21 +80,34 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
     const storedData = localStorage.getItem("formData");
     if (storedData) {
       try {
-        const domains = JSON.parse(storedData);
+        const domains = JSON.parse(storedData) as string[];
         if (
           Array.isArray(domains) &&
           domains.every((d) => whiteList.includes(d as Domain))
         ) {
           setSelectedDomains(domains as Domain[]);
           const index = domains.indexOf(domain);
-          setCurrentDomainIndex(index >= 0 ? index : 0);
+          if (index >= 0) {
+            setCurrentDomainIndex(index);
+          }
         }
       } catch (error) {
         console.error("Error parsing stored domains:", error);
         router.push("/apply");
       }
+    } else {
+      router.push("/apply");
     }
   }, [domain, router, whiteList]);
+
+  useEffect(() => {
+    if (selectedDomains.length > 0) {
+      const index = selectedDomains.indexOf(domain as Domain);
+      if (index >= 0) {
+        setCurrentDomainIndex(index);
+      }
+    }
+  }, [domain, selectedDomains]);
 
   const handleInputChange = (index: number, value: string) => {
     setFormData((prev) => ({
@@ -113,12 +138,12 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
     try {
       localStorage.setItem(`formData_${domain}`, JSON.stringify(formData));
 
-      const basicInfo = JSON.parse(localStorage.getItem("basicInfo") ?? "{}");
+      const basicInfo = JSON.parse(localStorage.getItem("basicInfo") ?? "{}") as BasicInfo;
       const allFormData = selectedDomains.map((d) => ({
         domain: d,
         data: JSON.parse(
           localStorage.getItem(`formData_${d}`) ?? '{"answers":[],"files":[]}',
-        ),
+        ) as FormData,
       }));
 
       const allAnswers = {
@@ -134,10 +159,10 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
         body: JSON.stringify(allAnswers),
       });
 
-      const result = await response.json();
+      const result = await response.json() as SubmitResult;
 
       if (!result.success) {
-        throw new Error(result.error || "Submission failed");
+        throw new Error(result.error ?? "Submission failed");
       }
 
       // Clear local storage
@@ -257,9 +282,11 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
       </div>
 
       <div className="absolute right-0 top-0">
-        <img
+        <Image
           src="/thundericon.png"
           alt="Thunder Icon"
+          width={128}
+          height={128}
           className="w-20 md:w-32"
         />
       </div>
