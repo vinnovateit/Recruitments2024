@@ -32,6 +32,8 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
 
   const whiteList: Domain[] = ["technical", "management", "design"];
 
+  const isValidDomain = domain && whiteList.includes(domain as Domain);
+
   interface SubmissionResponse {
     success: boolean;
     hasSubmitted: boolean;
@@ -62,22 +64,6 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
     }
   }, [session, status]);
 
-  if (status === "loading" || isLoading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-specpurple">
-        <div className="text-white">Loading...</div>
-      </div>
-    );
-  }
-
-  if (!session) {
-    return <LoginScreen />;
-  }
-
-  if (hasSubmitted) {
-    return <AlreadySubmitted />;
-  }
-
   useEffect(() => {
     const storedData = localStorage.getItem("formData");
     if (storedData) {
@@ -96,7 +82,7 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
         router.push("/apply");
       }
     }
-  }, [domain, router]);
+  }, [domain, router, whiteList]);
 
   const handleInputChange = (index: number, value: string) => {
     setFormData((prev) => ({
@@ -176,11 +162,6 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
     setIsSubmitting(false);
   };
 
-  // Validate domain
-  if (!domain || !whiteList.includes(domain as Domain)) {
-    return <div className="mt-20 text-center text-white">Invalid Domain</div>;
-  }
-
   const domainContent = {
     technical: {
       description:
@@ -210,6 +191,26 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
       ],
     },
   } as const;
+
+  if (status === "loading" || isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-specpurple">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return <LoginScreen />;
+  }
+
+  if (hasSubmitted) {
+    return <AlreadySubmitted />;
+  }
+
+  if (!isValidDomain) {
+    return <div className="mt-20 text-center text-white">Invalid Domain</div>;
+  }
 
   const content = domainContent[domain as Domain];
 
