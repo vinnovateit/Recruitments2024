@@ -32,13 +32,18 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
 
   const whiteList: Domain[] = ["technical", "management", "design"];
 
+  interface SubmissionResponse {
+    success: boolean;
+    hasSubmitted: boolean;
+  }
+
   // Check if user has already submitted
   useEffect(() => {
     const checkSubmissionStatus = async () => {
       if (session?.user?.email) {
         try {
           const response = await fetch("/api/submit");
-          const data = await response.json();
+          const data = await response.json() as SubmissionResponse;
           if (data.success) {
             setHasSubmitted(data.hasSubmitted);
           }
