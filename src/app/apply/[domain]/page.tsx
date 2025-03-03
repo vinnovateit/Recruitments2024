@@ -60,7 +60,7 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
     };
 
     if (status !== "loading") {
-      checkSubmissionStatus();
+      void checkSubmissionStatus();
     }
   }, [session, status]);
 
@@ -113,11 +113,11 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
     try {
       localStorage.setItem(`formData_${domain}`, JSON.stringify(formData));
 
-      const basicInfo = JSON.parse(localStorage.getItem("basicInfo") || "{}");
+      const basicInfo = JSON.parse(localStorage.getItem("basicInfo") ?? "{}");
       const allFormData = selectedDomains.map((d) => ({
         domain: d,
         data: JSON.parse(
-          localStorage.getItem(`formData_${d}`) || '{"answers":[],"files":[]}',
+          localStorage.getItem(`formData_${d}`) ?? '{"answers":[],"files":[]}',
         ),
       }));
 
