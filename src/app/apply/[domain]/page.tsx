@@ -78,6 +78,8 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
 
   useEffect(() => {
     const storedData = localStorage.getItem("formData");
+    const storedFormData = localStorage.getItem(`formData_${domain}`);
+    
     if (storedData) {
       try {
         const domains = JSON.parse(storedData) as string[];
@@ -97,6 +99,15 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
       }
     } else {
       router.push("/apply");
+    }
+
+    if (storedFormData) {
+      try {
+        const parsedFormData = JSON.parse(storedFormData) as FormData;
+        setFormData(parsedFormData);
+      } catch (error) {
+        console.error("Error parsing stored form data:", error);
+      }
     }
   }, [domain, router, whiteList]);
 
