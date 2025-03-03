@@ -64,7 +64,7 @@ export const Landingpage = () => {
       {/* SVG decoration */}
       <svg
         ref={svgRef}
-        className="absolute top-0 left-0 w-24 md:w-32 lg:w-40 ml-[-1.2vw]"
+        className="absolute left-0 top-0 ml-[-1.2vw] w-24 md:w-32 lg:w-40"
         viewBox="0 0 129 95"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -86,36 +86,48 @@ export const Landingpage = () => {
       </svg>
 
       {/* Main content container */}
-      <div className="max-w-screen h-screen w-full top-20 flex flex-col md:flex-row items-center justify-between px-6 md:px-12 lg:px-24">
+      <div className="max-w-screen top-20 flex h-screen w-full flex-col items-center justify-between px-6 md:flex-row md:px-12 lg:px-24">
         {/* LEFT TEXT SECTION */}
-        <div className="text-center md:text-left md:w-1/2 w-full pt-20 md:pt-0 mt-[9vh] md:mt-[18vh]">
-          <h1 ref={titleRef} className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#FF5ACD]">
+        <div className="mt-[9vh] w-full pt-20 text-center md:mt-[18vh] md:w-1/2 md:pt-0 md:text-left">
+          <h1
+            ref={titleRef}
+            className="text-4xl font-bold text-[#FF5ACD] md:text-6xl lg:text-7xl"
+          >
             VINNOVATEIT
           </h1>
-          <h2 ref={subtitleRef} className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#9FFF47]">
+          <h2
+            ref={subtitleRef}
+            className="text-4xl font-bold text-[#9FFF47] md:text-6xl lg:text-7xl"
+          >
             RECRUITING
           </h2>
-          <h3 ref={nowRef} className="text-4xl md:text-6xl lg:text-7xl font-bold text-white">
+          <h3
+            ref={nowRef}
+            className="text-4xl font-bold text-white md:text-6xl lg:text-7xl"
+          >
             NOW
           </h3>
-          <p ref={taglineRef} className="mt-4 text-white text-base md:text-lg font-semibold">
+          <p
+            ref={taglineRef}
+            className="mt-4 text-base font-semibold text-white md:text-lg"
+          >
             VinnovateIT, because everybody needs a family in college!
           </p>
           <Link href="/apply" className="group inline-block">
-          <button
-  ref={buttonRef}
-  className="relative z-10 mt-6 px-8 py-2 md:px-6 md:py-3 bg-pink-500 text-white uppercase font-bold rounded-none transition-transform duration-200 hover:scale-110 overflow-hidden group pointer-events-none"
->
-  <span className="relative z-10 group-hover:text-black">REGISTER NOW</span>
-  <span className="absolute inset-0 bg-[#9FFF47] transition-transform duration-300 ease-in-out scale-y-0 origin-bottom group-hover:scale-y-100"></span>
-</button>
-
-
+            <button
+              ref={buttonRef}
+              className="group pointer-events-none relative z-10 mt-6 overflow-hidden rounded-none bg-pink-500 px-8 py-2 font-bold uppercase text-white transition-transform duration-200 hover:scale-110 md:px-6 md:py-3"
+            >
+              <span className="relative z-10 group-hover:text-black">
+                REGISTER NOW
+              </span>
+              <span className="absolute inset-0 origin-bottom scale-y-0 bg-[#9FFF47] transition-transform duration-300 ease-in-out group-hover:scale-y-100"></span>
+            </button>
           </Link>
         </div>
 
         {/* RIGHT IMAGE SECTION - added more top margin for mobile */}
-        <div className="relative md:w-1/2 flex justify-center mt-12 pt-5 md:mt-0 overflow-hidden">
+        <div className="relative mt-12 flex justify-center overflow-hidden pt-5 md:mt-0 md:w-1/2">
           <div ref={heroImageRef}>
             <Image
               src={heroImage}
@@ -128,6 +140,13 @@ export const Landingpage = () => {
           </div>
         </div>
       </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute h-0 w-0 select-none overflow-hidden opacity-0"
+        data-ctf="v1nn0v4t3"
+        data-hint="This is the first. Robots have been barred to access the next one."
+        style={{ position: "absolute", clip: "rect(0,0,0,0)" }}
+      />
     </div>
   );
 };
