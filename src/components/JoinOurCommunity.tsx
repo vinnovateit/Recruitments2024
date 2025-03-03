@@ -145,8 +145,12 @@ const JoinOurCommunity: React.FC = () => {
     
     // Cleanup function
     return () => {
-      timelines.forEach(timeline => timeline.kill());
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      timelines.forEach(timeline => {
+        timeline.kill();
+      });
+      ScrollTrigger.getAll().forEach(trigger => {
+        trigger.kill();
+      });
     };
   }, []);
 
