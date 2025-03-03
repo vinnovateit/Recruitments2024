@@ -13,6 +13,7 @@ type Domain = "technical" | "management" | "design";
 interface FormData {
   answers: string[];
   files: File[];
+  errors?: string[];
 }
 
 interface BasicInfo {
@@ -26,15 +27,66 @@ interface SubmitResult {
   error?: string;
 }
 
+const domainContent = {
+  technical: {
+    description:
+      "Share your technical expertise and problem-solving skills through these challenges. We're looking for innovative thinkers who can tackle complex problems.",
+    questions: [
+      { text: "Github id", mandatory: false },
+      { text: "What is a task from your daily life that you wish to automate?", mandatory: true },
+      { text: "What are your two favorite technical domains, and how would you combine them to create a useful product? (Example: If you like AI and healthcare, you could create an app that analyzes symptoms and predicts potential illnesses. If you like drones and agriculture, you could design a drone system that monitors crop health using computer vision.)", mandatory: true },
+      { text: "You are developing an app that lets users send an emergency alert to contacts even if their phone is locked or out of battery. How would you implement this?(Hint: Think about alternative ways to trigger an alert)", mandatory: false },
+      { text: "An artist complains that AI-generated images mimic their work too closely. How would you prevent AI models from infringing on intellectual property rights?", mandatory: true },
+      { text: "A hacker has found a way to use computer cooling fans to send secret messages by varying their speed over air gapped systems. How would you detect and mitigate this?", mandatory: true },
+      { text: "A recommendation system you built is causing a 'filter bubble' where users are only exposed to a narrow range of content. How would you address this while maintaining personalization?", mandatory: true },
+      { text: "You need to implement a search engine that works efficiently with just 1MB of RAM. How would you approach this problem?(Hint: Traditional search engines use large indexes, but memory is limited here. Could compression, approximate search techniques, or lightweight indexing help?)", mandatory: false },
+      { text: "Did you find the hidden flags? Put them in here", mandatory: false },
+    ],
+  },
+  management: {
+    description:
+      "Demonstrate your leadership abilities and project management skills. We're seeking individuals who can drive teams toward success.",
+    questions: [
+      { text: "LinkedIn id", mandatory: true },
+      { text: "Do you have prior experience of managing tasks/ teams?", mandatory: true },
+      { text: "You're leading a task that requires cooperation from multiple departments, but some department members are unresponsive and are causing delays. How would you manage this situation to ensure the project moves forward?", mandatory: true },
+      { text: "Suppose we have an event coming up for which we require a target number of registrations. How will you market the event and ensure registrations using methods other than social media marketing?", mandatory: true },
+      { text: "Imagine you're assigned a team who's running behind on deadlines. How will you use your managerial skills and delegate the tasks to bring the team back on track?", mandatory: true },
+      { text: "A rival club launches an application similar to ours, how would you go about convincing people that ours is better, without bad mouthing them?", mandatory: true },
+      { text: "What are your expectations from VinnovateIT?", mandatory: true },
+    ],
+  },
+  design: {
+    description:
+      "Show us your creative vision and design thinking. We're looking for designers who can blend aesthetics with functionality.",
+    questions: [
+      { text: "Do you have any previous experience in design? If yes, specify the time period.", mandatory: true },
+      { text: "Which software you use for designing? [Figma, Canva, illustrator, photoshop]", mandatory: true },
+    ],
+  },
+} as const;
+
 const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const [selectedDomains, setSelectedDomains] = useState<Domain[]>([]);
   const [currentDomainIndex, setCurrentDomainIndex] = useState<number>(0);
-  const [formData, setFormData] = useState<FormData>({
-    answers: ["", "", ""],
-    files: [],
+  const [formData, setFormData] = useState<FormData>(() => {
+    const currentDomain = domain as Domain;
+    if (domainContent[currentDomain]) {
+      const questionCount = domainContent[currentDomain].questions.length;
+      return {
+        answers: Array.from({ length: questionCount }, () => ""),
+        files: [],
+        errors: Array.from({ length: questionCount }, () => ""),
+      };
+    }
+    return {
+      answers: [],
+      files: [],
+      errors: [],
+    };
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -127,7 +179,22 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
     }));
   };
 
+  const validateForm = () => {
+    const currentDomain = domain as Domain;
+    const questions = domainContent[currentDomain].questions;
+    const newErrors = questions.map((q, idx) => 
+      q.mandatory && !formData.answers[idx]?.trim() ? "This field is required" : ""
+    );
+    
+    setFormData(prev => ({ ...prev, errors: newErrors }));
+    return !newErrors.some(error => error !== "");
+  };
+
   const handleNavigation = (direction: "back" | "next") => {
+    if (direction === "next" && !validateForm()) {
+      return;
+    }
+    
     // Save current form data
     localStorage.setItem(`formData_${domain}`, JSON.stringify(formData));
 
@@ -145,6 +212,10 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
   };
 
   const handleSubmit = async () => {
+    if (!validateForm()) {
+      return;
+    }
+    
     setIsSubmitting(true);
     try {
       localStorage.setItem(`formData_${domain}`, JSON.stringify(formData));
@@ -197,36 +268,6 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
     }
     setIsSubmitting(false);
   };
-
-  const domainContent = {
-    technical: {
-      description:
-        "Share your technical expertise and problem-solving skills through these challenges. We're looking for innovative thinkers who can tackle complex problems.",
-      questions: [
-        "Create a small project demonstrating your expertise in any programming language. Share the GitHub repository link and explain your approach.",
-        "What's the most challenging technical problem you've solved? Share a link to the solution or describe your approach in detail.",
-        "Share your portfolio or any technical blog posts you've written. How do you stay updated with the latest tech trends?",
-      ],
-    },
-    management: {
-      description:
-        "Demonstrate your leadership abilities and project management skills. We're seeking individuals who can drive teams toward success.",
-      questions: [
-        "Describe a project you've led from inception to completion. What challenges did you face and how did you overcome them?",
-        "Share a link to a presentation or document showcasing your management philosophy and approach to team leadership.",
-        "How would you handle a team conflict? Provide an example from your past experience with supporting documents if available.",
-      ],
-    },
-    design: {
-      description:
-        "Show us your creative vision and design thinking. We're looking for designers who can blend aesthetics with functionality.",
-      questions: [
-        "Share your design portfolio or Behance/Dribbble profile. What's your design philosophy and process?",
-        "Present a case study of your most challenging design project. What was your role and how did you approach the problems?",
-        "Create a quick design concept for a mobile app homepage. Share your thought process and the final design file.",
-      ],
-    },
-  } as const;
 
   if (status === "loading" || isLoading) {
     return (
@@ -321,18 +362,26 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
               {content.questions.map((question, index) => (
                 <div key={index} className="space-y-4">
                   <label className="block text-justify text-sm text-white md:text-base lg:text-lg">
-                    {question}
+                    {question.text}
+                    {question.mandatory && <span className="text-red-500 ml-1">*</span>}
                   </label>
 
-                  <input
-                    type={index === 1 ? "url" : "text"}
-                    className="w-full rounded border border-purple-800 bg-specpurple p-[0.7rem] text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none"
-                    placeholder={
-                      index === 1 ? "Attach URL here..." : "Answer here..."
-                    }
-                    value={formData.answers[index]}
-                    onChange={(e) => handleInputChange(index, e.target.value)}
-                  />
+                  <div className="relative">
+                    <input
+                      type={index === 1 ? "url" : "text"}
+                      className={`w-full rounded border ${
+                        formData.errors?.[index] ? 'border-red-500' : 'border-purple-800'
+                      } bg-specpurple p-[0.7rem] text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none`}
+                      placeholder={index === 1 ? "Attach URL here..." : "Answer here..."}
+                      value={formData.answers[index]}
+                      onChange={(e) => handleInputChange(index, e.target.value)}
+                    />
+                    {formData.errors?.[index] && (
+                      <span className="text-red-500 text-sm absolute -bottom-6 left-0">
+                        {formData.errors[index]}
+                      </span>
+                    )}
+                  </div>
                 </div>
               ))}
             </form>
