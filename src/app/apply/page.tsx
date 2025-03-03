@@ -1,17 +1,46 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DomainSelectionForm from "~/components/DomainSelectionForm";
 import { useSession } from "next-auth/react";
 import LoginScreen from "~/components/LoginScreen";
+import AlreadySubmitted from "~/components/AlreadySubmitted";
 
 const Page = () => {
   const { data: session, status } = useSession();
+  const [hasSubmitted, setHasSubmitted] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (status === "loading") {
-    return <div className="flex justify-center items-center min-h-screen bg-specpurple">
-      <svg
-          className="animate-spin h-10 w-10 text-lime-500"
+  // Check if user has already submitted
+  useEffect(() => {
+    const checkSubmissionStatus = async () => {
+      if (session?.user?.email) {
+        try {
+          const response = await fetch("/api/submit");
+          const data = await response.json();
+          if (data.success) {
+            setHasSubmitted(data.hasSubmitted);
+          }
+        } catch (error) {
+          console.error("Error checking submission status:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    if (status !== "loading") {
+      checkSubmissionStatus();
+    }
+  }, [session, status]);
+
+  if (status === "loading" || isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-specpurple">
+        <svg
+          className="h-10 w-10 animate-spin text-lime-500"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -30,18 +59,23 @@ const Page = () => {
             d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
           ></path>
         </svg>
-    </div>;
+      </div>
+    );
   }
 
   if (!session) {
     return <LoginScreen />;
   }
 
+  if (hasSubmitted) {
+    return <AlreadySubmitted />;
+  }
+
   return (
     <div className="">
-      <div className="absolute top-0 left-0">
+      <div className="absolute left-0 top-0">
         <svg
-          className="w-16 md:w-32 lg:w-40 ml-[-1.2vw]"
+          className="ml-[-1.2vw] w-16 md:w-32 lg:w-40"
           viewBox="0 0 129 95"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -63,10 +97,10 @@ const Page = () => {
         </svg>
       </div>
 
-      <div className="absolute top-0 right-0">
-        <img 
-          src="/thundericon.png" 
-          alt="Thunder Icon" 
+      <div className="absolute right-0 top-0">
+        <img
+          src="/thundericon.png"
+          alt="Thunder Icon"
           className="w-20 md:w-32"
         />
       </div>

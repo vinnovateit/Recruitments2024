@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import LoginScreen from "~/components/LoginScreen";
 import Alert from "~/components/Alert";
+import AlreadySubmitted from "~/components/AlreadySubmitted";
 
 type Domain = "technical" | "management" | "design";
 
@@ -13,67 +14,99 @@ interface FormData {
   files: File[];
 }
 
-const DomainPage = ({
-  params: { domain },
-}: {
-  params: { domain: string }
-}) => {
+const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const [selectedDomains, setSelectedDomains] = useState<Domain[]>([]);
   const [currentDomainIndex, setCurrentDomainIndex] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
-    answers: ['', '', ''],
-    files: []
+    answers: ["", "", ""],
+    files: [],
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  
+  const [hasSubmitted, setHasSubmitted] = useState<boolean | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   const whiteList: Domain[] = ["technical", "management", "design"];
 
-  if (status === "loading") {
-    return <div className="flex justify-center items-center min-h-screen bg-specpurple">
-      <div className="text-white">Loading...</div>
-    </div>;
+  // Check if user has already submitted
+  useEffect(() => {
+    const checkSubmissionStatus = async () => {
+      if (session?.user?.email) {
+        try {
+          const response = await fetch("/api/submit");
+          const data = await response.json();
+          if (data.success) {
+            setHasSubmitted(data.hasSubmitted);
+          }
+        } catch (error) {
+          console.error("Error checking submission status:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    if (status !== "loading") {
+      checkSubmissionStatus();
+    }
+  }, [session, status]);
+
+  if (status === "loading" || isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-specpurple">
+        <div className="text-white">Loading...</div>
+      </div>
+    );
   }
 
   if (!session) {
     return <LoginScreen />;
   }
 
+  if (hasSubmitted) {
+    return <AlreadySubmitted />;
+  }
+
   useEffect(() => {
-    const storedData = localStorage.getItem('formData');
+    const storedData = localStorage.getItem("formData");
     if (storedData) {
       try {
         const domains = JSON.parse(storedData);
-        if (Array.isArray(domains) && domains.every(d => whiteList.includes(d as Domain))) {
+        if (
+          Array.isArray(domains) &&
+          domains.every((d) => whiteList.includes(d as Domain))
+        ) {
           setSelectedDomains(domains as Domain[]);
           const index = domains.indexOf(domain);
           setCurrentDomainIndex(index >= 0 ? index : 0);
         }
       } catch (error) {
-        console.error('Error parsing stored domains:', error);
-        router.push('/apply');
+        console.error("Error parsing stored domains:", error);
+        router.push("/apply");
       }
     }
   }, [domain, router]);
 
   const handleInputChange = (index: number, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      answers: prev.answers.map((answer, i) => i === index ? value : answer)
+      answers: prev.answers.map((answer, i) => (i === index ? value : answer)),
     }));
   };
 
-  const handleNavigation = (direction: 'back' | 'next') => {
+  const handleNavigation = (direction: "back" | "next") => {
     // Save current form data
     localStorage.setItem(`formData_${domain}`, JSON.stringify(formData));
 
-    if (direction === 'back') {
+    if (direction === "back") {
       if (!selectedDomains.length || currentDomainIndex === 0) {
-        router.push('/apply');
+        router.push("/apply");
       } else {
         router.push(`/apply/${selectedDomains[currentDomainIndex - 1]}`);
       }
@@ -92,7 +125,9 @@ const DomainPage = ({
       const basicInfo = JSON.parse(localStorage.getItem("basicInfo") || "{}");
       const allFormData = selectedDomains.map((d) => ({
         domain: d,
-        data: JSON.parse(localStorage.getItem(`formData_${d}`) || '{"answers":[],"files":[]}'),
+        data: JSON.parse(
+          localStorage.getItem(`formData_${d}`) || '{"answers":[],"files":[]}',
+        ),
       }));
 
       const allAnswers = {
@@ -100,10 +135,10 @@ const DomainPage = ({
         domains: allFormData,
       };
 
-      const response = await fetch('/api/submit', {
-        method: 'POST',
+      const response = await fetch("/api/submit", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(allAnswers),
       });
@@ -111,23 +146,22 @@ const DomainPage = ({
       const result = await response.json();
 
       if (!result.success) {
-        throw new Error(result.error || 'Submission failed');
+        throw new Error(result.error || "Submission failed");
       }
 
       // Clear local storage
-      selectedDomains.forEach(d => {
+      selectedDomains.forEach((d) => {
         localStorage.removeItem(`formData_${d}`);
       });
-      localStorage.removeItem('basicInfo');
-      localStorage.removeItem('formData');
+      localStorage.removeItem("basicInfo");
+      localStorage.removeItem("formData");
 
       // Show success alert and redirect
       setShowSuccess(true);
       setTimeout(() => {
         router.push("/thank-you");
       }, 2000);
-    }
-    catch (error) {
+    } catch (error) {
       console.error("Error submitting form:", error);
       setShowError(true);
       setTimeout(() => {
@@ -139,34 +173,37 @@ const DomainPage = ({
 
   // Validate domain
   if (!domain || !whiteList.includes(domain as Domain)) {
-    return <div className="text-white text-center mt-20">Invalid Domain</div>;
+    return <div className="mt-20 text-center text-white">Invalid Domain</div>;
   }
 
   const domainContent = {
     technical: {
-      description: "Share your technical expertise and problem-solving skills through these challenges. We're looking for innovative thinkers who can tackle complex problems.",
+      description:
+        "Share your technical expertise and problem-solving skills through these challenges. We're looking for innovative thinkers who can tackle complex problems.",
       questions: [
         "Create a small project demonstrating your expertise in any programming language. Share the GitHub repository link and explain your approach.",
         "What's the most challenging technical problem you've solved? Share a link to the solution or describe your approach in detail.",
-        "Share your portfolio or any technical blog posts you've written. How do you stay updated with the latest tech trends?"
-      ]
+        "Share your portfolio or any technical blog posts you've written. How do you stay updated with the latest tech trends?",
+      ],
     },
     management: {
-      description: "Demonstrate your leadership abilities and project management skills. We're seeking individuals who can drive teams toward success.",
+      description:
+        "Demonstrate your leadership abilities and project management skills. We're seeking individuals who can drive teams toward success.",
       questions: [
         "Describe a project you've led from inception to completion. What challenges did you face and how did you overcome them?",
         "Share a link to a presentation or document showcasing your management philosophy and approach to team leadership.",
-        "How would you handle a team conflict? Provide an example from your past experience with supporting documents if available."
-      ]
+        "How would you handle a team conflict? Provide an example from your past experience with supporting documents if available.",
+      ],
     },
     design: {
-      description: "Show us your creative vision and design thinking. We're looking for designers who can blend aesthetics with functionality.",
+      description:
+        "Show us your creative vision and design thinking. We're looking for designers who can blend aesthetics with functionality.",
       questions: [
         "Share your design portfolio or Behance/Dribbble profile. What's your design philosophy and process?",
         "Present a case study of your most challenging design project. What was your role and how did you approach the problems?",
-        "Create a quick design concept for a mobile app homepage. Share your thought process and the final design file."
-      ]
-    }
+        "Create a quick design concept for a mobile app homepage. Share your thought process and the final design file.",
+      ],
+    },
   } as const;
 
   const content = domainContent[domain as Domain];
@@ -189,9 +226,9 @@ const DomainPage = ({
           duration={2000}
         />
       )}
-      <div className="font-Fixture absolute top-0 left-0">
+      <div className="absolute left-0 top-0 font-Fixture">
         <svg
-          className="w-16 md:w-32 lg:w-40 ml-[-1.2vw]"
+          className="ml-[-1.2vw] w-16 md:w-32 lg:w-40"
           viewBox="0 0 129 95"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -213,37 +250,42 @@ const DomainPage = ({
         </svg>
       </div>
 
-      <div className="absolute top-0 right-0">
-        <img 
-          src="/thundericon.png" 
-          alt="Thunder Icon" 
+      <div className="absolute right-0 top-0">
+        <img
+          src="/thundericon.png"
+          alt="Thunder Icon"
           className="w-20 md:w-32"
         />
       </div>
 
-      <div className="font-Fixture flex justify-center items-center min-h-screen bg-specpurple">
-        <div className="w-full max-w-4xl relative px-6 cursor-none">
+      <div className="flex min-h-screen items-center justify-center bg-specpurple font-Fixture">
+        <div className="relative w-full max-w-4xl cursor-none px-6">
           <div className="mt-[20vh] space-y-8">
-            <div className="text-center space-y-4">
-              <h1 className="text-white text-5xl md:text-7xl font-bold uppercase">
+            <div className="space-y-4 text-center">
+              <h1 className="text-5xl font-bold uppercase text-white md:text-7xl">
                 {domain}
               </h1>
-              <p className="text-white text-sm md:text-base lg:text-lg">
+              <p className="text-sm text-white md:text-base lg:text-lg">
                 {content.description}
               </p>
             </div>
 
-            <form className="space-y-8 cursor-none" onSubmit={(e) => e.preventDefault()}>
+            <form
+              className="cursor-none space-y-8"
+              onSubmit={(e) => e.preventDefault()}
+            >
               {content.questions.map((question, index) => (
                 <div key={index} className="space-y-4">
-                  <label className="text-white text-sm md:text-base lg:text-lg block text-justify">
+                  <label className="block text-justify text-sm text-white md:text-base lg:text-lg">
                     {question}
                   </label>
-                  
+
                   <input
                     type={index === 1 ? "url" : "text"}
-                    className="w-full p-[0.7rem] bg-specpurple rounded text-white placeholder-gray-400 border border-purple-800 focus:outline-none focus:border-purple-500"
-                    placeholder={index === 1 ? "Attach URL here..." : "Answer here..."}
+                    className="w-full rounded border border-purple-800 bg-specpurple p-[0.7rem] text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none"
+                    placeholder={
+                      index === 1 ? "Attach URL here..." : "Answer here..."
+                    }
                     value={formData.answers[index]}
                     onChange={(e) => handleInputChange(index, e.target.value)}
                   />
@@ -251,19 +293,19 @@ const DomainPage = ({
               ))}
             </form>
 
-            <div className="flex justify-center gap-4 mt-12">
+            <div className="mt-12 flex justify-center gap-4">
               <button
-                onClick={() => handleNavigation('back')}
-                className="bg-purple-500 text-white px-10 py-3 rounded text-lg font-medium hover:bg-pink-700 transition-colors"
+                onClick={() => handleNavigation("back")}
+                className="rounded bg-purple-500 px-10 py-3 text-lg font-medium text-white transition-colors hover:bg-pink-700"
                 disabled={isSubmitting}
               >
                 ← BACK
               </button>
-                
+
               {currentDomainIndex < selectedDomains.length - 1 ? (
                 <button
-                  onClick={() => handleNavigation('next')}
-                  className="bg-pink-500 text-white px-10 py-3 rounded text-lg font-medium hover:bg-lime-400 hover:text-black transition-colors"
+                  onClick={() => handleNavigation("next")}
+                  className="rounded bg-pink-500 px-10 py-3 text-lg font-medium text-white transition-colors hover:bg-lime-400 hover:text-black"
                   disabled={isSubmitting}
                 >
                   NEXT →
@@ -273,23 +315,23 @@ const DomainPage = ({
                   ref={submitButtonRef}
                   onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className="relative z-10 px-10 py-3 bg-pink-500 text-white text-lg font-medium rounded overflow-hidden group transition-transform duration-200 hover:scale-110"
+                  className="group relative z-10 overflow-hidden rounded bg-pink-500 px-10 py-3 text-lg font-medium text-white transition-transform duration-200 hover:scale-110"
                 >
                   <span className="relative z-10 flex items-center gap-2 group-hover:text-black">
                     SUBMIT
-                    <svg 
-                      className="w-6 h-6"
-                      viewBox="0 0 24 24" 
-                      fill="none" 
+                    <svg
+                      className="h-6 w-6"
+                      viewBox="0 0 24 24"
+                      fill="none"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path 
-                        d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" 
+                      <path
+                        d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"
                         fill="currentColor"
                       />
                     </svg>
                   </span>
-                  <span className="absolute inset-0 bg-lime-400 transition-transform duration-300 ease-in-out scale-y-0 origin-bottom group-hover:scale-y-100"></span>
+                  <span className="absolute inset-0 origin-bottom scale-y-0 bg-lime-400 transition-transform duration-300 ease-in-out group-hover:scale-y-100"></span>
                 </button>
               )}
             </div>

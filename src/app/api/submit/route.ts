@@ -9,7 +9,7 @@ interface BasicInfo {
 }
 
 interface DomainData {
-  domain: 'technical' | 'management' | 'design';
+  domain: "technical" | "management" | "design";
   data: {
     answers: string[];
   };
@@ -20,25 +20,63 @@ interface SubmissionRequest {
   domains: DomainData[];
 }
 
+// Quick check to see if already submitted
+export async function GET() {
+  try {
+    const session = await getServerAuthSession();
+
+    if (!session?.user?.email) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 },
+      );
+    }
+
+    const existingApplication = await db.application.findUnique({
+      where: {
+        email: session.user.email,
+      },
+    });
+
+    return NextResponse.json({
+      success: true,
+      hasSubmitted: !!existingApplication,
+    });
+  } catch (error) {
+    console.error("Error checking submission status:", error);
+    return NextResponse.json(
+      { success: false, error: "Failed to check submission status" },
+      { status: 500 },
+    );
+  }
+}
+
 export async function POST(req: Request) {
   try {
     // Check authentication
     const session = await getServerAuthSession();
     if (!session?.user?.email?.endsWith("@vitstudent.ac.in")) {
       return NextResponse.json(
-        { success: false, error: "Unauthorized. Only VIT students can submit applications." },
-        { status: 401 }
+        {
+          success: false,
+          error: "Unauthorized. Only VIT students can submit applications.",
+        },
+        { status: 401 },
       );
     }
 
-    const body = await req.json() as SubmissionRequest;
+    const body = (await req.json()) as SubmissionRequest;
     const { basicInfo, domains } = body;
 
     // Validate basic info
-    if (!basicInfo.name || !basicInfo.registrationNumber || !basicInfo.mobileNumber) {
+    if (
+      !basicInfo.name ||
+      !basicInfo.registrationNumber ||
+      !basicInfo.mobileNumber
+    ) {
       return NextResponse.json(
         { success: false, error: "Missing required basic information" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -47,7 +85,7 @@ export async function POST(req: Request) {
     if (!regNoRegex.test(basicInfo.registrationNumber)) {
       return NextResponse.json(
         { success: false, error: "Invalid registration number format" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -56,7 +94,7 @@ export async function POST(req: Request) {
     if (!phoneRegex.test(basicInfo.mobileNumber)) {
       return NextResponse.json(
         { success: false, error: "Invalid phone number" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -84,7 +122,7 @@ export async function POST(req: Request) {
     console.error("Submission error:", error);
     return NextResponse.json(
       { success: false, error: "Failed to submit application" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
