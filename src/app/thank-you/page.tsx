@@ -9,7 +9,6 @@ import gsap from "gsap";
 
 import illustration1 from "public/assets/x36.png";
 import illustration2 from "public/assets/x34.png";
-import illustration3 from "public/assets/Group 414.png";
 import CustomCursor3 from "~/components/CursorAnimation3";
 import ThankYou from "~/components/ThankYou";
 

@@ -10,7 +10,7 @@ const CustomCursor = () => {
   useEffect(() => {
     const cursors = cursorsRef.current;
     const cursorPositions = cursorPoints.map(() => ({ x: 0, y: 0 }));
-    let currentIndex = 0;
+    // let currentIndex = 0; <-- unused
 
     // Set up initial cursor styles with smaller sizes and closer spacing
     cursors.forEach((cursor, index) => {

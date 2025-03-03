@@ -32,7 +32,7 @@ const Page = () => {
     };
 
     if (status !== "loading") {
-      checkSubmissionStatus();
+      void checkSubmissionStatus();
     }
   }, [session, status]);
 

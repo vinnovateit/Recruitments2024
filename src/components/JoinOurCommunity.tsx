@@ -33,7 +33,7 @@ const JoinOurCommunity: React.FC = () => {
     const setupAnimations = () => {
       // Set perspective on parent elements for 3D effect
       const setParentPerspective = (element: HTMLElement | null) => {
-        if (element && element.parentElement) {
+        if (element?.parentElement) {
           gsap.set(element.parentElement, { perspective: 400 });
         }
       };
