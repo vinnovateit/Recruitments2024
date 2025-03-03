@@ -5,6 +5,12 @@ import DomainSelectionForm from "~/components/DomainSelectionForm";
 import { useSession } from "next-auth/react";
 import LoginScreen from "~/components/LoginScreen";
 import AlreadySubmitted from "~/components/AlreadySubmitted";
+import Image from "next/image";
+
+interface SubmissionResponse {
+  success: boolean;
+  hasSubmitted: boolean;
+}
 
 const Page = () => {
   const { data: session, status } = useSession();
@@ -17,7 +23,7 @@ const Page = () => {
       if (session?.user?.email) {
         try {
           const response = await fetch("/api/submit");
-          const data = await response.json();
+          const data = (await response.json()) as SubmissionResponse;
           if (data.success) {
             setHasSubmitted(data.hasSubmitted);
           }
@@ -32,7 +38,7 @@ const Page = () => {
     };
 
     if (status !== "loading") {
-      checkSubmissionStatus();
+      void checkSubmissionStatus();
     }
   }, [session, status]);
 
@@ -98,9 +104,11 @@ const Page = () => {
       </div>
 
       <div className="absolute right-0 top-0">
-        <img
+        <Image
           src="/thundericon.png"
           alt="Thunder Icon"
+          width={128}
+          height={128}
           className="w-20 md:w-32"
         />
       </div>

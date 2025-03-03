@@ -103,7 +103,7 @@ export async function POST(req: Request) {
       data: {
         name: basicInfo.name,
         regNo: basicInfo.registrationNumber,
-        email: session.user.email!,
+        email: session.user.email,
         phone: basicInfo.mobileNumber,
         domainSubmissions: {
           create: domains.map((domain: DomainData) => ({

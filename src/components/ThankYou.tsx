@@ -105,14 +105,14 @@ const ThankYou: React.FC<AnimatedThankYouProps> = ({ setIsHovered }) => {
               ease: "easeInOut",
             }}
             className={`absolute text-center ${getTextStyles(
-              messages[currentIndex].style
+              messages[currentIndex]?.style ?? "latin"
             )}`}
             style={{
               ...getGradientStyle(currentIndex % 2 === 1),
               opacity: 1 // Force full opacity for text
             }}
           >
-            {messages[currentIndex].text}
+            {messages[currentIndex]?.text ?? "THANK YOU"}
           </motion.h1>
         </AnimatePresence>
       </div>
