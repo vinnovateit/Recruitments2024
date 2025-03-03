@@ -3,7 +3,8 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const CustomCursor = () => {
-  const cursorsRef = useRef([]);
+  // Update the ref type to be explicit about the elements it contains
+  const cursorsRef = useRef<(HTMLDivElement | null)[]>([]);
   const cursorPoints = Array(4).fill(null);
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const CustomCursor = () => {
         cursorPositions.forEach((pos, index) => {
           if (index === 0) return;
           const prevPos = cursorPositions[index - 1];
+          if (!prevPos) return;
           gsap.to(pos, {
             duration: 0.08,
             x: prevPos.x,
@@ -39,24 +41,30 @@ const CustomCursor = () => {
 
         // Animate each cursor with tighter spacing
         cursors.forEach((cursor, index) => {
+          const position = cursorPositions[index];
+          if (!cursor || !position) return;
+          
           gsap.to(cursor, {
             duration: 0.08,
-            x: cursorPositions[index].x - (6 - index * 0.5),
-            y: cursorPositions[index].y - (6 - index * 0.5),
+            x: position.x - (6 - index * 0.5),
+            y: position.y - (6 - index * 0.5),
             ease: "power1.out",
           });
         });
       },
     });
 
-    const updateCursor = (e) => {
-      cursorPositions[0].x = e.clientX;
-      cursorPositions[0].y = e.clientY;
+    const updateCursor = (e: MouseEvent): void => {
+      const firstPosition = cursorPositions[0];
+      if (firstPosition) {
+        firstPosition.x = e.clientX;
+        firstPosition.y = e.clientY;
+      }
     };
 
     // Interactive effects
-    const handleMouseEnter = (e) => {
-      const target = e.target;
+    const handleMouseEnter = (e: MouseEvent): void => {
+      const target = e.target as HTMLElement;
       
       if (target.tagName === 'A') {
         cursors.forEach((cursor, index) => {
@@ -113,7 +121,7 @@ const CustomCursor = () => {
       }
     };
 
-    const handleMouseLeave = () => {
+    const handleMouseLeave = (): void => {
       // Reset to original trail state
       cursors.forEach((cursor, index) => {
         gsap.to(cursor, {
@@ -131,15 +139,15 @@ const CustomCursor = () => {
     // Event listeners
     window.addEventListener('mousemove', updateCursor);
     document.querySelectorAll('a, button, img').forEach(el => {
-      el.addEventListener('mouseenter', handleMouseEnter);
-      el.addEventListener('mouseleave', handleMouseLeave);
+      el.addEventListener('mouseenter', handleMouseEnter as EventListener);
+      el.addEventListener('mouseleave', handleMouseLeave as EventListener);
     });
 
     return () => {
       window.removeEventListener('mousemove', updateCursor);
       document.querySelectorAll('a, button, img').forEach(el => {
-        el.removeEventListener('mouseenter', handleMouseEnter);
-        el.removeEventListener('mouseleave', handleMouseLeave);
+        el.removeEventListener('mouseenter', handleMouseEnter as EventListener);
+        el.removeEventListener('mouseleave', handleMouseLeave as EventListener);
       });
     };
   }, []);
@@ -149,7 +157,11 @@ const CustomCursor = () => {
       {cursorPoints.map((_, index) => (
         <div
           key={index}
-          ref={el => cursorsRef.current[index] = el}
+          ref={el => {
+            if (cursorsRef.current) {
+              cursorsRef.current[index] = el;
+            }
+          }}
           className="fixed top-0 left-0 rounded-full pointer-events-none mix-blend-difference z-50"
         />
       ))}
