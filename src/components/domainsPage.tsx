@@ -123,6 +123,27 @@ const DomainsPage: React.FC = () => {
             },
           }
         );
+
+        // Add hover animation for each card using GSAP
+        card.addEventListener("mouseenter", () => {
+          gsap.to(card, {
+            scale: 1.05,
+            y: -10,
+            boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+            duration: 0.4,
+            ease: "power2.out"
+          });
+        });
+
+        card.addEventListener("mouseleave", () => {
+          gsap.to(card, {
+            scale: 1,
+            y: 0,
+            boxShadow: "0 0px 0px rgba(0, 0, 0, 0)",
+            duration: 0.5,
+            ease: "power3.out"
+          });
+        });
       });
 
       ScrollTrigger.refresh();
@@ -133,12 +154,18 @@ const DomainsPage: React.FC = () => {
     return () => {
       clearTimeout(timer);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      
+      // Clean up event listeners
+      cardsRef.current.forEach((card) => {
+        card.removeEventListener("mouseenter", () => {});
+        card.removeEventListener("mouseleave", () => {});
+      });
     };
   }, []);
 
   return (
     <div className="font-Fixture">
-      <div className="mt-0 min-h-screen bg-[#1E003E] flex flex-col relative"> {/* Removed top margin */}
+      <div className="mt-0 min-h-screen bg-[#1E003E] flex flex-col relative">
         <div 
           ref={starGraphicRef}
           className="absolute top-0 left-0 w-20 md:w-32 mt-4 md:mt-8 opacity-0"
@@ -176,43 +203,54 @@ const DomainsPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="flex-grow w-full px-4 md:px-8 lg:px-20 pb-16"> {/* Added bottom padding */}
+        <div className="flex-grow w-full px-4 md:px-8 lg:px-20 pb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
             <div
               ref={addToCardsRef}
-              className="transform transition-transform hover:scale-105 opacity-0"
+              className="opacity-0 card-container"
             >
               <img
                 src="/managementcard.png"
                 alt="Management"
-                className="w-full max-w-[200px] md:max-w-[320px] hover:scale-105"
+                className="w-full max-w-[200px] md:max-w-[320px]"
               />
             </div>
 
             <div
               ref={addToCardsRef}
-              className="transform transition-transform hover:scale-105 opacity-0"
+              className="opacity-0 card-container"
             >
               <img
                 src="/techcard.png"
                 alt="Technical"
-                className="w-full max-w-[200px] md:max-w-[320px] hover:scale-105"
+                className="w-full max-w-[200px] md:max-w-[320px]"
               />
             </div>
 
             <div
               ref={addToCardsRef}
-              className="transform transition-transform md:col-span-2 lg:col-span-1 opacity-0"
+              className="md:col-span-2 lg:col-span-1 opacity-0 card-container"
             >
               <img
                 src="/designcard.png"
                 alt="Design"
-                className="w-full max-w-[200px] md:max-w-[320px] hover:scale-105"
+                className="w-full max-w-[200px] md:max-w-[320px]"
               />
             </div>
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .card-container {
+          transform: perspective(1000px);
+          transition-property: transform, box-shadow;
+          will-change: transform;
+          transform-style: preserve-3d;
+          border-radius: 12px;
+          overflow: hidden;
+        }
+      `}</style>
     </div>
   );
 };
