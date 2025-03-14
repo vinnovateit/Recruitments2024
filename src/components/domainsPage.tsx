@@ -3,7 +3,6 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
 import Graphic from "../../public/assets/8.png";
 
 const DomainsPage: React.FC = () => {
@@ -107,6 +106,34 @@ const DomainsPage: React.FC = () => {
           .to(thunderRef.current, { opacity: 1, duration: 0.01 });
       }
 
+      // Store event handlers for cleanup
+      const hoverHandlers = cardsRef.current.map(card => {
+        const enterHandler = () => {
+          gsap.to(card, {
+            scale: 1.05,
+            y: -10,
+            boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+            duration: 0.4,
+            ease: "power2.out"
+          });
+        };
+
+        const leaveHandler = () => {
+          gsap.to(card, {
+            scale: 1,
+            y: 0,
+            boxShadow: "0 0px 0px rgba(0, 0, 0, 0)",
+            duration: 0.5,
+            ease: "power3.out"
+          });
+        };
+
+        card.addEventListener("mouseenter", enterHandler);
+        card.addEventListener("mouseleave", leaveHandler);
+
+        return { card, enterHandler, leaveHandler };
+      });
+
       cardsRef.current.forEach((card, index) => {
         gsap.fromTo(
           card,
@@ -123,42 +150,25 @@ const DomainsPage: React.FC = () => {
             },
           }
         );
-
-        // Add hover animation for each card using GSAP
-        card.addEventListener("mouseenter", () => {
-          gsap.to(card, {
-            scale: 1.05,
-            y: -10,
-            boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
-            duration: 0.4,
-            ease: "power2.out"
-          });
-        });
-
-        card.addEventListener("mouseleave", () => {
-          gsap.to(card, {
-            scale: 1,
-            y: 0,
-            boxShadow: "0 0px 0px rgba(0, 0, 0, 0)",
-            duration: 0.5,
-            ease: "power3.out"
-          });
-        });
       });
 
       ScrollTrigger.refresh();
+
+      // Return cleanup function with handlers
+      return hoverHandlers;
     };
 
     const timer = setTimeout(initAnimations, 100);
+    let hoverHandlers: Array<{card: HTMLDivElement, enterHandler: () => void, leaveHandler: () => void}> = [];
 
     return () => {
       clearTimeout(timer);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       
       // Clean up event listeners
-      cardsRef.current.forEach((card) => {
-        card.removeEventListener("mouseenter", () => {});
-        card.removeEventListener("mouseleave", () => {});
+      hoverHandlers.forEach(({ card, enterHandler, leaveHandler }) => {
+        card.removeEventListener("mouseenter", enterHandler);
+        card.removeEventListener("mouseleave", leaveHandler);
       });
     };
   }, []);

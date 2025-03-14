@@ -2,9 +2,6 @@
 
 import { Inter } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
-import CursorAnimation from "~/components/CursorAnimation";
-import CustomCursor2 from "~/components/CursorAnimation2";
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
