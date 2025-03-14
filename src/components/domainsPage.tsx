@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 import Graphic from "../../public/assets/8.png";
 
 const DomainsPage: React.FC = () => {
@@ -23,6 +24,7 @@ const DomainsPage: React.FC = () => {
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
     }
+    
     const initAnimations = () => {
       gsap.set(starGraphicRef.current, {
         scale: 0,
@@ -158,18 +160,21 @@ const DomainsPage: React.FC = () => {
       return hoverHandlers;
     };
 
-    const timer = setTimeout(initAnimations, 100);
-    let hoverHandlers: Array<{card: HTMLDivElement, enterHandler: () => void, leaveHandler: () => void}> = [];
+    const timer = setTimeout(() => {
+      const handlers = initAnimations();
+      
+      return () => {
+        // Clean up event listeners
+        handlers.forEach(({ card, enterHandler, leaveHandler }) => {
+          card.removeEventListener("mouseenter", enterHandler);
+          card.removeEventListener("mouseleave", leaveHandler);
+        });
+      };
+    }, 100);
 
     return () => {
       clearTimeout(timer);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-      
-      // Clean up event listeners
-      hoverHandlers.forEach(({ card, enterHandler, leaveHandler }) => {
-        card.removeEventListener("mouseenter", enterHandler);
-        card.removeEventListener("mouseleave", leaveHandler);
-      });
     };
   }, []);
 
