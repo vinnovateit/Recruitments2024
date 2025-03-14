@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import LoginScreen from "~/components/LoginScreen";
 import AlreadySubmitted from "~/components/AlreadySubmitted";
 import Image from "next/image";
+import CustomCursor2 from "~/components/CursorAnimation2";
 
 interface SubmissionResponse {
   success: boolean;
@@ -45,6 +46,7 @@ const Page = () => {
   if (status === "loading" || isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-specpurple">
+        <CustomCursor2/>
         <svg
           className="h-10 w-10 animate-spin text-lime-500"
           xmlns="http://www.w3.org/2000/svg"
@@ -79,6 +81,7 @@ const Page = () => {
 
   return (
     <div className="">
+      <CustomCursor2/>
       <div className="absolute left-0 top-0">
         <svg
           className="ml-[-1.2vw] w-16 md:w-32 lg:w-40"

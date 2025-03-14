@@ -1,10 +1,12 @@
 import React from 'react';
 import { signIn } from "next-auth/react";
 import { motion } from "framer-motion";
+import CustomCursor2 from './CursorAnimation2';
 
 const LoginScreen = () => {
   return (
-    <div className="flex flex-col justify-between h-screen bg-specpurple font-Fixture relative">
+    <div className="overflow-x-hidden flex flex-col justify-between h-screen bg-specpurple font-Fixture relative">
+      <CustomCursor2/>
       {/* Top section with logos */}
       <div className="relative w-full pt-6 px-4">
         <motion.div 
@@ -116,7 +118,7 @@ const LoginScreen = () => {
               ].map((text, index) => (
                 <motion.li 
                   key={index}
-                  className="flex items-start gap-2 p-2 rounded-lg hover:bg-white/5"
+                  className="flex items-start gap-2 p-2 rounded-lg"
                   initial={{ x: -20, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}

@@ -125,8 +125,8 @@ const CustomCursor = () => {
       // Reset to original trail state
       cursors.forEach((cursor, index) => {
         gsap.to(cursor, {
-          width: 16 - index * 1,
-          height: 16 - index * 1,
+          width: 24 - index * 1,
+          height: 24 - index * 1,
           backgroundColor: "rgba(74, 222, 128, " + (1 - index * 0.1) + ")",
           border: "none",
           filter: "blur(0px)",
