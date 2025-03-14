@@ -24,7 +24,7 @@ const CustomCursor3: React.FC<CustomCursorProps> = ({ color }) => {
   }, []);
 
   return (
-    <>
+    <div className="hidden lg:block">
       <style jsx global>{`
         body * {
           cursor: none !important;
@@ -53,7 +53,7 @@ const CustomCursor3: React.FC<CustomCursorProps> = ({ color }) => {
           />
         </svg>
       </div>
-    </>
+    </div>
   );
 };
 

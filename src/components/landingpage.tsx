@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
-import heroImage from "public/lp_img.png";
+import heroImage from "public/assets/22379237_6588171.png";
 import Link from "next/link";
 import gsap from "gsap";
 
