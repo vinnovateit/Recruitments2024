@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import LoginScreen from "~/components/LoginScreen";
 import Alert from "~/components/Alert";
 import AlreadySubmitted from "~/components/AlreadySubmitted";
+import CustomCursor2 from "~/components/CursorAnimation2";
 
 type Domain = "technical" | "management" | "design";
 
@@ -445,7 +446,27 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
   if (status === "loading" || isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-specpurple">
-        <div className="text-white">Loading...</div>
+        <CustomCursor2/>
+        <svg
+          className="h-10 w-10 animate-spin text-lime-500"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          ></circle>
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8z"
+          ></path>
+        </svg>
       </div>
     );
   }
@@ -466,6 +487,7 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
 
   return (
     <div className="cursor-none">
+      <CustomCursor2/>
       {showError && (
         <Alert
           message="Failed to submit application. Please try again."

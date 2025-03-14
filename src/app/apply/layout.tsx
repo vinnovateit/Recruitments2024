@@ -23,7 +23,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <CustomCursor2/>
       <body className={`font-sans ${inter.variable} bg-specpurple`}>
         <SessionProvider>
           {children}

@@ -15,6 +15,8 @@ export const Landingpage = () => {
   const taglineRef = useRef(null);
   const buttonRef = useRef(null);
   const svgRef = useRef(null);
+  const arrowRef = useRef(null);
+  const thunderIconRef = useRef(null);
 
   useEffect(() => {
     // GSAP timeline for sequential animations
@@ -26,6 +28,9 @@ export const Landingpage = () => {
     
     // Initial state for hero image - off-screen to the right
     gsap.set(heroImageRef.current, { opacity: 0, x: 200 });
+    
+    // Initial state for thunder icon - make it visible eventually
+    gsap.set(thunderIconRef.current, { opacity: 0 });
     
     // Sequential appear animations for text elements
     tl.to(svgRef.current, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" })
@@ -40,6 +45,12 @@ export const Landingpage = () => {
         x: 0, 
         duration: 0.8, 
         ease: "power2.out" 
+      })
+      // Make thunder icon visible
+      .to(thunderIconRef.current, {
+        opacity: 1,
+        duration: 0.5,
+        ease: "power2.out"
       });
     
     // Floating animation for hero image (starts after slide-in is complete)
@@ -52,6 +63,17 @@ export const Landingpage = () => {
         ease: "sine.inOut"
       });
     });
+
+    // Blinking animation for the arrow
+    if (arrowRef.current) {
+      gsap.to(arrowRef.current, {
+        opacity: 0.3,
+        duration: 0.8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+    }
     
     return () => {
       // Cleanup animations
@@ -60,11 +82,11 @@ export const Landingpage = () => {
   }, []);
 
   return (
-    <div className="relative font-Fixture">
+    <div className="relative font-Fixture overflow-x-hidden">
       {/* SVG decoration */}
       <svg
         ref={svgRef}
-        className="absolute left-0 top-0 ml-[-1.2vw] w-24 md:w-32 lg:w-40"
+        className="absolute left-0 top-0 ml-[-1.2vw] w-24 md:w-40"
         viewBox="0 0 129 95"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -85,10 +107,19 @@ export const Landingpage = () => {
         </g>
       </svg>
 
+      <div className="absolute right-0">
+        <img
+          ref={thunderIconRef}
+          src="/thundericon.png"
+          alt="Thunder Icon"
+          className="w-20 md:w-32"
+        />
+      </div>
+
       {/* Main content container */}
-      <div className="max-w-screen top-20 flex h-screen w-full flex-col items-center justify-between px-6 md:flex-row md:px-12 lg:px-24">
-        {/* LEFT TEXT SECTION */}
-        <div className="mt-[9vh] w-full pt-20 text-center md:mt-[18vh] md:w-1/2 md:pt-0 md:text-left">
+      <div className="max-w-screen flex h-screen w-full flex-col items-center justify-center px-6 md:flex-row md:justify-between md:px-12 lg:px-24">
+        {/* LEFT TEXT SECTION - reduced top margin for mobile */}
+        <div className="mt-4 w-full text-center md:mt-0 md:w-1/2 md:text-left md:flex md:flex-col md:justify-center">
           <h1
             ref={titleRef}
             className="text-4xl font-bold text-[#FF5ACD] md:text-6xl lg:text-7xl"
@@ -116,7 +147,7 @@ export const Landingpage = () => {
           <Link href="/apply" className="group inline-block">
             <button
               ref={buttonRef}
-              className="group pointer-events-none relative z-10 mt-6 overflow-hidden rounded-none bg-pink-500 px-8 py-2 font-bold uppercase text-white transition-transform duration-200 hover:scale-110 md:px-6 md:py-3"
+              className="group pointer-events-none relative z-10 mt-4 overflow-hidden rounded-none bg-pink-500 px-8 py-2 font-bold uppercase text-white transition-transform duration-200 hover:scale-110 md:mt-6 md:px-6 md:py-3"
             >
               <span className="relative z-10 group-hover:text-black">
                 REGISTER NOW
@@ -126,9 +157,9 @@ export const Landingpage = () => {
           </Link>
         </div>
 
-        {/* RIGHT IMAGE SECTION - added more top margin for mobile */}
-        <div className="relative mt-12 flex justify-center overflow-hidden pt-5 md:mt-0 md:w-1/2">
-          <div ref={heroImageRef}>
+        {/* RIGHT IMAGE SECTION - aligned with text vertically */}
+        <div className="relative mt-4 flex justify-center items-center md:mt-0 md:w-1/2">
+          <div ref={heroImageRef} className="md:flex md:items-center md:h-full">
             <Image
               src={heroImage}
               alt="Illustration"
@@ -140,6 +171,29 @@ export const Landingpage = () => {
           </div>
         </div>
       </div>
+
+      {/* Blinking Arrow SVG at bottom */}
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+        <svg
+          ref={arrowRef}
+          width="60"
+          height="60"
+          viewBox="0 0 60 60"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="animate-pulse"
+        >
+          <circle cx="30" cy="30" r="29" stroke="#9FFF47" strokeWidth="2" />
+          <path
+            d="M30 15 L30 45 M20 35 L30 45 L40 35"
+            stroke="#9FFF47"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </div>
+      
       <div
         aria-hidden="true"
         className="pointer-events-none absolute h-0 w-0 select-none overflow-hidden opacity-0"
