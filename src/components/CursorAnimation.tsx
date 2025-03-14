@@ -153,7 +153,7 @@ const CustomCursor = () => {
   }, []);
 
   return (
-    <>
+    <div className="hidden lg:block">
       {cursorPoints.map((_, index) => (
         <div
           key={index}
@@ -165,7 +165,7 @@ const CustomCursor = () => {
           className="fixed top-0 left-0 rounded-full pointer-events-none mix-blend-difference z-50"
         />
       ))}
-    </>
+    </div>
   );
 };
 

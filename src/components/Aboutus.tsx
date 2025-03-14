@@ -3,8 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import Photo from "../../public/assets/AboutUs.png";
-import Graphic from "../../public/assets/8.png";
+import Photo from "../../public/assets/IMG_7328 1.png";
 import Wow from "../../public/assets/Group.png";
 
 if (typeof window !== "undefined") {
@@ -15,7 +14,6 @@ type Props = unknown;
 
 const AboutUs = (props: Props) => {
   const image1URL = Photo.src;
-  const image2URL = Graphic.src;
   const image3URL = Wow.src;
   
   const imageRef = useRef(null);

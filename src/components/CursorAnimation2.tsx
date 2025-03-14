@@ -36,7 +36,7 @@ const CustomCursor2: React.FC = () => {
   return (
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 w-5 h-5 bg-lime-400 rounded-full pointer-events-none z-50"
+      className="hidden lg:block fixed top-0 left-0 w-5 h-5 bg-lime-400 rounded-full pointer-events-none z-50"
     />
   );
 };
