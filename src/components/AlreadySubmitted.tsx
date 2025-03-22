@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import CustomCursor3 from "./CursorAnimation3";
+import FormFooter from "./FormFooter";
 
 const AlreadyFilled: React.FC = () => {
   const router = useRouter();
@@ -64,7 +65,8 @@ const AlreadyFilled: React.FC = () => {
   });
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-specpurple font-Fixture cursor-none">
+    <div>
+      <div className="flex min-h-screen items-center justify-center bg-specpurple font-Fixture cursor-none">
       <svg
         className="absolute left-0 top-0 ml-[-1.2vw] w-24 md:w-40"
         viewBox="0 0 129 95"
@@ -165,6 +167,8 @@ const AlreadyFilled: React.FC = () => {
         </div>
       </div>
     </div>
+      <FormFooter/></div>
+    
   );
 };
 

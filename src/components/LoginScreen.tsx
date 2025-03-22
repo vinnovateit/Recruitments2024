@@ -2,6 +2,7 @@ import React from 'react';
 import { signIn } from "next-auth/react";
 import { motion } from "framer-motion";
 import CustomCursor2 from './CursorAnimation2';
+import FormFooter from './FormFooter';
 
 const LoginScreen = () => {
   return (
@@ -163,6 +164,7 @@ const LoginScreen = () => {
           </motion.div>
         </motion.div>
       </div>
+      <FormFooter/>
     </div>
   );
 };

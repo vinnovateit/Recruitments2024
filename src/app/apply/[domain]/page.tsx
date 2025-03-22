@@ -8,6 +8,7 @@ import LoginScreen from "~/components/LoginScreen";
 import Alert from "~/components/Alert";
 import AlreadySubmitted from "~/components/AlreadySubmitted";
 import CustomCursor2 from "~/components/CursorAnimation2";
+import FormFooter from "~/components/FormFooter";
 
 type Domain = "technical" | "management" | "design";
 
@@ -632,7 +633,7 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
               ))}
             </form>
 
-            <div className="mt-12 flex justify-center gap-4">
+            <div className="mt-12 flex justify-center gap-4 pb-4">
               <button
                 onClick={() => handleNavigation("back")}
                 className="rounded bg-purple-500 px-10 py-3 text-lg font-medium text-white transition-colors hover:bg-pink-700"
@@ -677,6 +678,7 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
           </div>
         </div>
       </div>
+      <FormFooter/>
     </div>
   );
 };
