@@ -7,6 +7,7 @@ import LoginScreen from "~/components/LoginScreen";
 import AlreadySubmitted from "~/components/AlreadySubmitted";
 import Image from "next/image";
 import CustomCursor2 from "~/components/CursorAnimation2";
+import FormFooter from "~/components/FormFooter";
 
 interface SubmissionResponse {
   success: boolean;
@@ -116,6 +117,7 @@ const Page = () => {
         />
       </div>
       <DomainSelectionForm />
+      <FormFooter/>
     </div>
   );
 };

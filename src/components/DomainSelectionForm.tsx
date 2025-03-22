@@ -120,8 +120,8 @@ const DomainSelectionForm: React.FC = () => {
                 value={answers[field as keyof typeof answers]}
                 onChange={(e) => handleAnswerChange(field as keyof typeof answers, e.target.value)}
                 readOnly={field === "name" || field === "registrationNumber"}
-                className={`w-full p-[0.7rem] bg-specpurple rounded text-white placeholder-gray-400 border border-purple-800 focus:outline-none focus:border-purple-500 text-lg ${
-                  (field === "name" || field === "registrationNumber") ? "opacity-70 cursor-not-allowed" : ""
+                className={`w-full p-[0.7rem] bg-specpurple rounded text-white placeholder-white placeholder-opacity-70 border border-purple-800 focus:outline-none focus:border-purple-500 text-lg ${
+                  (field === "name" || field === "registrationNumber") ? "cursor-not-allowed" : ""
                 }`}
                 required
               />
@@ -132,7 +132,7 @@ const DomainSelectionForm: React.FC = () => {
           ))}
         </div>
 
-        <div className="flex justify-center mt-12">
+        <div className="flex justify-center mt-12 pb-4">
           <button
             onClick={handleNext}
             className="bg-pink-500 text-white hover:text-black px-10 py-3 rounded text-lg font-medium hover:bg-[#9FFF47] transition-colors"

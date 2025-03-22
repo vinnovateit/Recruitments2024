@@ -8,6 +8,7 @@ import LoginScreen from "~/components/LoginScreen";
 import Alert from "~/components/Alert";
 import AlreadySubmitted from "~/components/AlreadySubmitted";
 import CustomCursor2 from "~/components/CursorAnimation2";
+import FormFooter from "~/components/FormFooter";
 
 type Domain = "technical" | "management" | "design";
 
@@ -169,7 +170,7 @@ const domainContent: Record<Domain, DomainContent> = {
         type: "text",
       },
       {
-        text: "What domain interests you more?",
+        text: "Among these, which domain interests you more?",
         mandatory: true,
         type: "mcq",
         options: [
@@ -574,29 +575,26 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
 
                   <div className="relative">
                     {question.type === "mcq" ? (
-                      <div className="space-y-2">
-                        {question.options?.map((option, optionIndex) => (
-                          <div key={optionIndex} className="flex items-center">
-                            <input
-                              type="radio"
-                              id={`${index}-${optionIndex}`}
-                              name={`question-${index}`}
-                              value={option}
-                              checked={formData.answers[index] === option}
-                              onChange={(e) =>
-                                handleInputChange(index, e.target.value)
-                              }
-                              className="mr-2 cursor-pointer"
-                            />
-                            <label
-                              htmlFor={`${index}-${optionIndex}`}
-                              className="cursor-pointer text-white"
-                            >
-                              {option}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
+                      <div className="space-y-5">
+    {question.options?.map((option, optionIndex) => (
+      <div key={optionIndex} className="flex items-center">
+        <div
+          className={`relative mr-3 flex h-7 w-7 cursor-pointer items-center justify-center border-2 border-white bg-specpurple`}
+          onClick={() => handleInputChange(index, option)}
+        >
+          {formData.answers[index] === option && (
+            <span className="text-lg font-extrabold text-[#9FFF47]">✓</span>
+          )}
+        </div>
+        <label 
+          className="cursor-pointer text-lg text-white" 
+          onClick={() => handleInputChange(index, option)}
+        >
+          {option}
+        </label>
+      </div>
+    ))}
+  </div>
                     ) : question.long ? (
                       <textarea
                         className={`w-full rounded border ${
@@ -635,7 +633,7 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
               ))}
             </form>
 
-            <div className="mt-12 flex justify-center gap-4">
+            <div className="mt-12 flex justify-center gap-4 pb-4">
               <button
                 onClick={() => handleNavigation("back")}
                 className="rounded bg-purple-500 px-10 py-3 text-lg font-medium text-white transition-colors hover:bg-pink-700"
@@ -680,6 +678,7 @@ const DomainPage = ({ params: { domain } }: { params: { domain: string } }) => {
           </div>
         </div>
       </div>
+      <FormFooter/>
     </div>
   );
 };
