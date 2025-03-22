@@ -9,7 +9,6 @@ const inter = Inter({
 export const metadata = {
   title: "Join VinnovateIT 2025",
   description: "Join VinnovateIT 2025",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 export default function RootLayout({
