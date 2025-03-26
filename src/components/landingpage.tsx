@@ -130,13 +130,13 @@ export const Landingpage = () => {
             ref={subtitleRef}
             className="text-4xl font-bold text-[#9FFF47] md:text-6xl lg:text-7xl"
           >
-            RECRUITING
+            RECRUITMENTS
           </h2>
           <h3
             ref={nowRef}
             className="text-4xl font-bold text-white md:text-6xl lg:text-7xl"
           >
-            NOW
+            2025
           </h3>
           <p
             ref={taglineRef}
@@ -144,7 +144,7 @@ export const Landingpage = () => {
           >
             VinnovateIT, because everybody needs a family in college!
           </p>
-          <Link href="/apply" className="group inline-block">
+          <Link href="/thank-you" className="group inline-block">
             <button
               ref={buttonRef}
               className="group pointer-events-none relative z-10 mt-4 overflow-hidden rounded-none bg-pink-500 px-8 py-2 font-bold uppercase text-white transition-transform duration-200 hover:scale-110 md:mt-6 md:px-6 md:py-3"
