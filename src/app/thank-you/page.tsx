@@ -86,7 +86,9 @@ const Page: React.FC = () => {
 
         <div className="md:mt-8 lg:mt-12 flex justify-center">
           <ThankYou setIsHovered={setIsHovered} />
+          
         </div>
+        <p className="mt-5 text-center">Forms are Closed Now. See You Soon !!</p>
 
         {/* Bottom Right Illustration animated from right */}
         <div
