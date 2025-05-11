@@ -72,6 +72,7 @@ Recruits portal for different domains with a fun little ctf.
 [![TailwindCSS][TailwindCSS]][Tailwind-url]
 [![Prisma][Prisma-img]][Prisma-url]
 [![Vercel][Vercel-img]][Vercel-url]
+[![GSAP][GSAP-img]][GSAP-url]
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -144,3 +145,5 @@ To set up the development environment, follow the steps below.
 [Prisma-url]: https://www.prisma.io/
 [Vercel-img]: https://img.shields.io/badge/Vercel-%23000000.svg?logo=vercel&logoColor=white
 [Vercel-url]: https://vercel.com/
+[GSAP-img]: https://custom-icon-badges.demolab.com/badge/gsap-0e100f?logo=gsap
+[GSAP-url]: https://greensock.com/gsap/
